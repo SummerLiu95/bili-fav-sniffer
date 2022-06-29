@@ -1,0 +1,50 @@
+# Netscape HTTP Cookie File
+# http://curl.haxx.se/rfc/cookie_spec.html
+# This is a generated file!  Do not edit.
+
+api.vc.bilibili.com	FALSE	/dynamic_draft/v1/dynamic_draft	FALSE	0	l	v
+api.vc.bilibili.com	FALSE	/dynamic_svr/v1/dynamic_svr	FALSE	0	l	v
+api.vc.bilibili.com	FALSE	/dynamic_mix/v1/dynamic_mix	FALSE	0	l	v
+api.vc.bilibili.com	FALSE	/banner_svr/v1/banner_svr	FALSE	0	l	v
+api.vc.bilibili.com	FALSE	/account/v1/user	FALSE	0	l	v
+message.bilibili.com	FALSE	/api/tooltip	FALSE	0	l	v
+message.bilibili.com	FALSE	/api/msg	FALSE	0	l	v
+.t.bilibili.com	TRUE	/	FALSE	1676737683	Hm_lvt_8a6e55dbd2870f0f5bc9194cddf32a02	1643125764,1644764923
+.bilibili.com	TRUE	/	FALSE	1667740287	_uuid	C2108B77-3F93-71EA-3C4F-7793656F0EB987381infoc
+.bilibili.com	TRUE	/	FALSE	1687148068	blackside_state	0
+.bilibili.com	TRUE	/	FALSE	1685189853	buvid_fp_plain	undefined
+.bilibili.com	TRUE	/	FALSE	1730812288	buvid3	AD21C06B-F436-413A-AD8C-E0A0797DA9A3148804infoc
+.bilibili.com	TRUE	/	FALSE	1737811144	buvid4	09C2229E-6E7D-18C2-247E-2EBB7FC02ACA70540-022012511-LePzZyyq+m9sALolNFOPVg%3D%3D
+.bilibili.com	TRUE	/	FALSE	1687148063	CURRENT_BLACKGAP	0
+.bilibili.com	TRUE	/	FALSE	1673846511	fingerprint_s	6dbb9d575d2eed246a426641402dff4e
+.bilibili.com	TRUE	/	FALSE	1677855162	fingerprint3	945bfcc01f86766e2eaced668d8cc552
+.bilibili.com	TRUE	/	FALSE	1687634755	i-wanna-go-back	-1
+.bilibili.com	TRUE	/	FALSE	1673096378	kfcFrom	SIXIN
+.bilibili.com	TRUE	/	FALSE	2177452799	LIVE_BUVID	AUTO1616363022023629
+.bilibili.com	TRUE	/	FALSE	1678688013	nostalgia_conf	-1
+.bilibili.com	TRUE	/	FALSE	1668121200	rpdid	|(um|JY|YJuu0J'uYJYk|RR|Y
+.bilibili.com	TRUE	/	FALSE	1670081719	video_page_version	v_old_home
+.www.bilibili.com	TRUE	/	FALSE	1668397512	Hm_lvt_8a6e55dbd2870f0f5bc9194cddf32a02	1636861513
+www.bilibili.com	FALSE	/	FALSE	1730812288	b_nut	1636204288
+.bilibili.com	TRUE	/	FALSE	253402300799	dy_spec_agreed	1
+.bilibili.com	TRUE	/	FALSE	1681390836	hit-dyn-v2	1
+.manga.bilibili.com	TRUE	/	FALSE	1681777100	Hm_lvt_6ab26a3edfb92b96f655b43a89b9ca70	1647789884,1650241100
+.manga.bilibili.com	TRUE	/	FALSE	1681777100	Hm_lvt_a69e400ba5d439df060bf330cd092c0d	1647789884,1650241100
+.space.bilibili.com	TRUE	/	FALSE	1682216914	Hm_lvt_8a6e55dbd2870f0f5bc9194cddf32a02	1650680915
+.bilibili.com	TRUE	/	FALSE	1683295316	b_ut	5
+.bilibili.com	TRUE	/	FALSE	1683811290	CURRENT_QUALITY	127
+.bilibili.com	TRUE	/	FALSE	253402300799	PVID	1
+.bilibili.com	TRUE	/	FALSE	0	bsource	share_source_weixinchat
+.bilibili.com	TRUE	/	FALSE	1748261853	buvid_fp	094983077e8ad28091a294753fc4f32d
+.bilibili.com	TRUE	/	FALSE	1671650506	DedeUserID	31386575
+.bilibili.com	TRUE	/	FALSE	1671650506	DedeUserID__ckMd5	530a27fa782ba547
+.bilibili.com	TRUE	/	FALSE	1685189886	fingerprint	094983077e8ad28091a294753fc4f32d
+www.bilibili.com	FALSE	/	FALSE	0	theme_style	light
+.bilibili.com	TRUE	/	FALSE	1687148068	CURRENT_FNVAL	4048
+.bilibili.com	TRUE	/	FALSE	0	innersign	0
+.bilibili.com	TRUE	/	FALSE	0	b_lsid	5B253EC3_1819729C314
+.bilibili.com	TRUE	/	FALSE	0	b_timer	%7B%22ffp%22%3A%7B%22333.1007.fp.risk_AD21C06B%22%3A%221819729C44D%22%2C%22333.880.fp.risk_AD21C06B%22%3A%22180EC9D4FBE%22%2C%22333.788.fp.risk_AD21C06B%22%3A%221817A2B4A4D%22%2C%22444.41.fp.risk_AD21C06B%22%3A%22181003F4048%22%2C%22333.52.fp.risk_AD21C06B%22%3A%22181057330A3%22%2C%22333.130.fp.risk_AD21C06B%22%3A%221810573553D%22%2C%22333.866.fp.risk_AD21C06B%22%3A%2218105737570%22%7D%7D
+.bilibili.com	TRUE	/	FALSE	1671650506	SESSDATA	5e552054%2C1671650506%2Cccac2%2A61
+.bilibili.com	TRUE	/	FALSE	1671650506	bili_jct	c9746bb1f03258f6475700d53bc990ea
+.bilibili.com	TRUE	/	FALSE	1671650506	sid	jlngauqn
+.bilibili.com	TRUE	/	FALSE	1658690756	bp_video_offset_31386575	675395272431370200
