@@ -1,2 +1,1 @@
-# * */1 * * *  /bin/bash /root/bili/bili.sh >>/var/log/cron.log 2>&1
-*/1 * * * *  echo "hello" >>/var/log/cron.log 2>&1
+0 * * * * root /bin/bash /root/bili.sh >>/var/log/cron.log 2>&1
