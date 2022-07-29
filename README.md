@@ -10,9 +10,9 @@ $ docker build -t bili .
 
 ```bash
 # 前台运行, 结束后删除该容器.
-$ docker run --rm bili
+$ docker run --rm -v /mnt/sda/storage/Music_Learning:/root/download bili
 # 后台运行, 结束后删除该容器.
-$ docker run --rm -d bili
+$ docker run --rm -d -v /mnt/sda/storage/Music_Learning:/root/download bili
 # 调试镜像.
-$ docker run -it --rm bili /bin/bash
+$ docker run -it --rm -v /mnt/sda/storage/Music_Learning:/root/download bili /bin/bash
 ```
