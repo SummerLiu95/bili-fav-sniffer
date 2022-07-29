@@ -5,7 +5,9 @@ COPY cronjobs /etc/cron.d/my_you_get
 COPY DanmakuFactory bili.sh /root/
 
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt update && \
+RUN mkdir /root/download && \
+    chmod 777 /root/download/ && \
+    apt update && \
     apt install -y python3-pip cron git && \
     python3 -m pip install you-get && \
     rm -rf /var/lib/apt/lists/* && \
