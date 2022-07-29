@@ -8,7 +8,7 @@ rssURL="https://rsshub.app/bilibili/fav/31386575/86822275/0"
 #脚本存放地址
 scriptLocation="/root/"
 #视频存放地址
-videoLocation="sda/mnt/favourite/"
+videoLocation="/root/download/"
 #邮件地址
 mailAddress="178997821@qq.com"
 
