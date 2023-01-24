@@ -17,8 +17,8 @@ $ docker run --rm -d -v /mnt/sda/storage/Music_Learning:/root/download bili
 $ docker run -it --rm -v /mnt/sda/storage/Music_Learning:/root/download bili /bin/bash
 ```
 # To-Do
-- [ ] 配置文件
-- [ ] 多个新收藏视频下载
+- [x] 配置文件
+- [x] 多个新收藏视频下载
 # 参考资料
 
 [自动下载B站收藏视频](https://blog.left.pink/archives/3073)

@@ -3,19 +3,19 @@ you=you-get
 
 #配置参数
 dirLocation="./"
-#telegram参数
-telegram_bot_token="5144461932:AAEaZ88e2-9cmbyU5EsyxgnZCA5AiFgcNbY"
-telegram_chat_id="1779452711"
-#视频存放地址
-videoLocation="/Users/summer/Movies/you-get-download/"
-uid=31386575
-fid=1719937875
+telegram_bot_token=$(jq -c -r .telegram_bot_token ./config.json)
+telegram_chat_id=$(jq -c -r .telegram_chat_id ./config.json)
+uid=$(jq -c -r .uid ./config.json)
+fid=$(jq -c -r .fid ./config.json)
+videoLocation=$(jq -c -r .video_location ./config.json)
+cookies_location=$(jq -c -r .cookies_location ./config.json)
+bv_location=$(jq -c -r .bv_location ./config.json)
+
 favURL="https://space.bilibili.com/$uid/favlist?fid=$fid"
-#RSS 地址
 rssURL="https://rsshub.app/bilibili/fav/$uid/$fid/1"
 
 #抓取rss更新
-content=$(wget $rssURL -q -O -)
+content=$(wget "$rssURL" -q -O -)
 
 #获取收藏夹名称和链接
 favTitleSuffix=${content%%<atom:link*}
@@ -24,7 +24,7 @@ favTitle=${temp%%\]\]>*}
 echo "favTitle: $favTitle"
 
 #Cookies可用性检查
-stat=$($you -i -l -c "$dirLocation"cookies.txt https://www.bilibili.com/video/BV1fK4y1t7hj)
+stat=$($you -i -l -c "$cookies_location" https://www.bilibili.com/video/BV1fK4y1t7hj)
 subStat=${stat#*quality:}
 data=${subStat%%#*}
 quality=${data%%size*}
@@ -57,7 +57,7 @@ for(( i=0;i<${#infoArray[@]};i++)) do
   linkSuffix=${item#*<link>}
   link=${linkSuffix%%</link>*}
   bv=${link#*video/}
-  oldBV=$(cat "${dirLocation}"BV.txt)
+  oldBV=$(cat "${bv_location}")
   bvCompareRes=$(echo "$oldBV" | grep "$bv")
   if [ "$bvCompareRes" = "" ]; then
     titleSuffix=${item#*\[CDATA\[}
@@ -79,10 +79,10 @@ for(( i=0;i<${#infoArray[@]};i++)) do
     else
       wget "$photoLink" -O "$folderName/$videoTitle.png"
     fi
-    curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id=$telegram_chat_id -d parse_mode=html -d text="<a href=\"${link}\">$videoTitle</a>%0A开始下载"
-    $you --playlist -c "$dirLocation"cookies.txt -o "$folderName" "$link"
-    echo "$bv" >>"${dirLocation}"BV.txt
-    curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id=$telegram_chat_id -d parse_mode=html -d text="<a href=\"${link}\">$videoTitle</a>%0A下载成功"
+    curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id="$telegram_chat_id" -d parse_mode=html -d text="<a href=\"${link}\">$videoTitle</a>%0A开始下载"
+    $you --playlist -c "$cookies_location" -o "$folderName" "$link"
+    echo "$bv" >>"${bv_location}"
+    curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id="$telegram_chat_id" -d parse_mode=html -d text="<a href=\"${link}\">$videoTitle</a>%0A下载成功"
     #记录此次任务中已下载的视频bv
     bvDownloaded[$BVCount]=$bv
     ((BVCount++))
@@ -93,5 +93,7 @@ done
 
 #收藏夹未更新
 if [ ${#bvDownloaded[*]} = 0 ]; then
-    curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id=$telegram_chat_id -d parse_mode=html -d text="<a href=\"${favURL}\">$favTitle</a>%0A收藏夹未更新"
+  curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id="$telegram_chat_id" -d parse_mode=html -d text="<a href=\"${favURL}\">$favTitle</a>%0A收藏夹本轮未检测到新视频"
+else
+  curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id="$telegram_chat_id" -d parse_mode=html -d text="<a href=\"${favURL}\">$favTitle</a>%0A收藏夹本轮检测完成"
 fi
