@@ -23,67 +23,75 @@ temp=${favTitleSuffix#*\[CDATA\[}
 favTitle=${temp%%\]\]>*}
 echo "favTitle: $favTitle"
 
-#获得最新视频发布时间戳
-tempPubDate=${content#*<pubDate>}
-
-#获得最新视频标题
-itemSuffix=${content#*<item>}
-titleSuffix=${itemSuffix#*\[CDATA\[}
-videoTitle=${titleSuffix%%\]\]>*}
-echo "videoTitle: $videoTitle"
-
-#如果BV记录文本不存在则创建
-if [ ! -f "${dirLocation}BV.txt" ]; then
-    echo "" >"${dirLocation}"BV.txt
+#Cookies可用性检查
+stat=$($you -i -l -c "$dirLocation"cookies.txt https://www.bilibili.com/video/BV1fK4y1t7hj)
+subStat=${stat#*quality:}
+data=${subStat%%#*}
+quality=${data%%size*}
+if [[ $quality =~ "4K" ]]; then
+    curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id=$telegram_chat_id -d parse_mode=html -d text="$favTitle: Cookies 文件有效，进入检测更新逻辑"
+else
+    curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id=$telegram_chat_id -d parse_mode=html -d text="$favTitle: Cookies 文件失效，请更新后重试"
+    exit
 fi
 
-#获得上一个视频的BV号
-oldBV=$(cat "${dirLocation}"BV.txt)
-#此处为视频存储位置，自行修改
-folderName="$videoLocation$videoTitle"
+#获取视频列表信息
+count=0
+infoArray=()
 
-#获得视频下载链接
-subLink=${tempPubDate#*<link>}
-link=${subLink%%</link>*}
-bv=${link#*video/}
+info=${content#*</ttl>}
+result=$(echo "$info" | grep "<item>")
+while [ "$result" != "" ]
+do
+  temp=${info%%</author>*}
+  infoArray[$count]=$temp
+  info=${info#*</item>}
+  result=$(echo "$info" | grep "<link>")
+  ((count++))
+done
 
-echo "link: $link"
-echo "BV: $bv"
-
-bvCompareRes=$(echo "$oldBV" | grep "$bv")
-echo "bvCompareRes: $bvCompareRes"
-
-
-#判断当前时间戳和上次记录是否相同，不同则代表收藏列表更新
-if [ "$bvCompareRes" = "" ]; then
-    #Cookies可用性检查
-    stat=$($you -i -l -c "$dirLocation"cookies.txt https://www.bilibili.com/video/BV1fK4y1t7hj)
-    subStat=${stat#*quality:}
-    data=${subStat%%#*}
-    quality=${data%%size*}
-    if [[ $quality =~ "4K" ]]; then
-        #获得封面图下载链接和文件名称
-        subContent=${content#*<img src=\"}
-        photoLink=${subContent%%\"*}
-        pName=${photoLink#*archive/}
-        echo "photoLink: $photoLink"
-        echo "pName: $pName"
-        #下载封面图（图片存储位置应和视频一致）
-        pNameCompareRes=$(echo "$pName" | grep "jpg")
-        echo "pNameCompareRes: $pNameCompareRes"
-        mkdir "$folderName"
-        if [ "$pNameCompareRes" != "" ]; then
-          wget "$photoLink" -O "$folderName/$videoTitle.jpg"
-        else
-          wget "$photoLink" -O "$folderName/$videoTitle.png"
-        fi
-        curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id=$telegram_chat_id -d parse_mode=html -d text="<a href=\"${link}\">$videoTitle</a>%0A开始下载"
-        $you --playlist -c "$dirLocation"cookies.txt -o "$folderName" "$link"
-        echo "$bv" >>"${dirLocation}"BV.txt
-        curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id=$telegram_chat_id -d parse_mode=html -d text="<a href=\"${link}\">$videoTitle</a>%0A下载成功"
+BVCount=0
+bvDownloaded=()
+for(( i=0;i<${#infoArray[@]};i++)) do
+  item=${infoArray[i]}
+  linkSuffix=${item#*<link>}
+  link=${linkSuffix%%</link>*}
+  bv=${link#*video/}
+  oldBV=$(cat "${dirLocation}"BV.txt)
+  bvCompareRes=$(echo "$oldBV" | grep "$bv")
+  if [ "$bvCompareRes" = "" ]; then
+    titleSuffix=${item#*\[CDATA\[}
+    videoTitle=${titleSuffix%%\]\]>*}
+    echo "videoTitle: $videoTitle"
+    #此处为视频存储位置，自行修改
+    folderName="$videoLocation$videoTitle"
+    #获得封面图下载链接和文件名称
+    subContent=${item#*<img src=\"}
+    photoLink=${subContent%%\"*}
+    pName=${photoLink#*archive/}
+    echo "photoLink: $photoLink"
+    echo "pName: $pName"
+    #下载封面图（图片存储位置应和视频一致）
+    pNameCompareRes=$(echo "$pName" | grep "jpg")
+    mkdir "$folderName"
+    if [ "$pNameCompareRes" != "" ]; then
+      wget "$photoLink" -O "$folderName/$videoTitle.jpg"
     else
-        curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id=$telegram_chat_id -d parse_mode=html -d text="Cookies 文件失效，请更新后重试"
+      wget "$photoLink" -O "$folderName/$videoTitle.png"
     fi
-else
+    curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id=$telegram_chat_id -d parse_mode=html -d text="<a href=\"${link}\">$videoTitle</a>%0A开始下载"
+    $you --playlist -c "$dirLocation"cookies.txt -o "$folderName" "$link"
+    echo "$bv" >>"${dirLocation}"BV.txt
+    curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id=$telegram_chat_id -d parse_mode=html -d text="<a href=\"${link}\">$videoTitle</a>%0A下载成功"
+    #记录此次任务中已下载的视频bv
+    bvDownloaded[$BVCount]=$bv
+    ((BVCount++))
+  else
+    break
+  fi
+done
+
+#收藏夹未更新
+if [ ${#bvDownloaded[*]} = 0 ]; then
     curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id=$telegram_chat_id -d parse_mode=html -d text="<a href=\"${favURL}\">$favTitle</a>%0A收藏夹未更新"
 fi
