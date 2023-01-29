@@ -11,4 +11,5 @@ RUN apt update && \
     rm -rf /var/lib/apt/lists/* && \
     chmod +x /etc/cron.d/*
 
+CMD ["mkdir", "/usr/you-get-download"]
 CMD ["cron", "-f"]
