@@ -1,18 +1,33 @@
 #!/bin/bash
-you=you-get
+source /etc/profile #添加这句
+export PATH=/opt/homebrew/bin/:$PATH
 
+you=you-get
+dirLocation=$(cd `dirname $0`; pwd)
 #配置参数
-dirLocation="./"
-telegram_bot_token=$(jq -c -r .telegram_bot_token ./config.json)
-telegram_chat_id=$(jq -c -r .telegram_chat_id ./config.json)
-uid=$(jq -c -r .uid ./config.json)
-fid=$(jq -c -r .fid ./config.json)
-videoLocation=$(jq -c -r .video_location ./config.json)
-cookies_location=$(jq -c -r .cookies_location ./config.json)
-bv_location=$(jq -c -r .bv_location ./config.json)
+telegram_bot_token=$(jq -c -r .telegram_bot_token "$dirLocation"/config.json)
+telegram_chat_id=$(jq -c -r .telegram_chat_id "$dirLocation"/config.json)
+uid=$(jq -c -r .uid "$dirLocation"/config.json)
+fid=$(jq -c -r .fid "$dirLocation"/config.json)
+videoLocation=$(jq -c -r .video_location "$dirLocation"/config.json)
+cookies_location="$dirLocation"/cookies.txt
+bv_location="$dirLocation"/BV.txt
 
 favURL="https://space.bilibili.com/$uid/favlist?fid=$fid"
 rssURL="https://rsshub.app/bilibili/fav/$uid/$fid/1"
+
+#创建下载目录
+mkdir "$videoLocation"
+chmod 777 "$videoLocation"
+
+#rss 可访问性检测
+response=$(curl -I -m 10 -o /dev/null -s -w %{http_code} "$rssURL")
+if [ "$response" != 200 ]; then
+  curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id="$telegram_chat_id" -d parse_mode=html -d text="$rssURL: RSS 访问失效"
+  exit
+else
+  curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id="$telegram_chat_id" -d parse_mode=html -d text="$rssURL: RSS 访问有效"
+fi
 
 #抓取rss更新
 content=$(wget "$rssURL" -q -O -)
@@ -93,7 +108,8 @@ done
 
 #收藏夹未更新
 if [ ${#bvDownloaded[*]} = 0 ]; then
-  curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id="$telegram_chat_id" -d parse_mode=html -d text="<a href=\"${favURL}\">$favTitle</a>%0A收藏夹本轮未检测到新视频"
+  jobResult='收藏夹本轮未检测到新视频'
 else
-  curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id="$telegram_chat_id" -d parse_mode=html -d text="<a href=\"${favURL}\">$favTitle</a>%0A收藏夹本轮检测完成"
+  jobResult='收藏夹本轮检测完成'
 fi
+curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id="$telegram_chat_id" -d parse_mode=html -d text="<a href=\"${favURL}\">$favTitle</a>%0A${jobResult}"
