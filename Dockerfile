@@ -6,7 +6,7 @@ COPY index.sh /root/
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update && \
-    apt install -y python3-pip cron git jq && \
+    apt install -y python3-pip cron git jq ffmpeg && \
     python3 -m pip install you-get && \
     rm -rf /var/lib/apt/lists/* && \
     chmod +x /etc/cron.d/*
