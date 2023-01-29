@@ -5,20 +5,16 @@ export PATH=/opt/homebrew/bin/:$PATH
 you=you-get
 dirLocation=$(cd `dirname $0`; pwd)
 #配置参数
-telegram_bot_token=$(jq -c -r .telegram_bot_token "$dirLocation"/config.json)
-telegram_chat_id=$(jq -c -r .telegram_chat_id "$dirLocation"/config.json)
-uid=$(jq -c -r .uid "$dirLocation"/config.json)
-fid=$(jq -c -r .fid "$dirLocation"/config.json)
-videoLocation=$(jq -c -r .video_location "$dirLocation"/config.json)
-cookies_location="$dirLocation"/cookies.txt
-bv_location="$dirLocation"/BV.txt
+telegram_bot_token=$(jq -c -r .telegram_bot_token "$dirLocation"/config/config.json)
+telegram_chat_id=$(jq -c -r .telegram_chat_id "$dirLocation"/config/config.json)
+uid=$(jq -c -r .uid "$dirLocation"/config/config.json)
+fid=$(jq -c -r .fid "$dirLocation"/config/config.json)
+videoLocation="/usr/you-get-download/"
+cookies_location="$dirLocation"/config/cookies.txt
+bv_location="$dirLocation"/config/BV.txt
 
 favURL="https://space.bilibili.com/$uid/favlist?fid=$fid"
 rssURL="https://rsshub.app/bilibili/fav/$uid/$fid/1"
-
-#创建下载目录
-mkdir "$videoLocation"
-chmod 777 "$videoLocation"
 
 #rss 可访问性检测
 response=$(curl -I -m 10 -o /dev/null -s -w %{http_code} "$rssURL")
