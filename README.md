@@ -1,4 +1,4 @@
-# my-you-get
+# bili-fav-sniffer
 
 ## 构建镜像.
 ```bash
