@@ -4,3 +4,4 @@
 .vscode/
 *.txt
 *.json
+config/
