@@ -1,1 +1,1 @@
-0 */8 * * * root /bin/bash /root/index.sh >>/var/log/cron.log 2>&1
+0 */6 * * * root /bin/bash /root/index.sh >>/var/log/cron.log 2>&1
