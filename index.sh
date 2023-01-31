@@ -14,7 +14,7 @@ cookies_location="$dirLocation"/config/cookies.txt
 bv_location="$dirLocation"/config/BV.txt
 
 favURL="https://space.bilibili.com/$uid/favlist?fid=$fid"
-rssURL="https://rsshub.app/bilibili/fav/$uid/$fid/1"
+rssURL="http://127.0.0.1:1200/bilibili/fav/$uid/$fid/1"
 
 #rss 可访问性检测
 response=$(curl -I -m 10 -o /dev/null -s -w %{http_code} "$rssURL")
