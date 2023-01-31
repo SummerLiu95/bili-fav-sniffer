@@ -8,6 +8,7 @@ $ docker build -t bili-fav-sniffer .
 ## To-Do
 - [x] 配置文件
 - [x] 多个新收藏视频下载
+- [ ] 修复视频下载是否成功的判断逻辑
 
 ## 使用须知
 使用前需要创建一个目录，该目录下创建三个运行必备文件，`config.json`、`BV.txt`、`cookies.txt`
