@@ -93,8 +93,21 @@ for(( i=0;i<${#infoArray[@]};i++)) do
     fi
     curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id="$telegram_chat_id" -d parse_mode=html -d text="<a href=\"${link}\">$videoTitle</a>%0A开始下载"
     $you --playlist -c "$cookies_location" -o "$folderName" "$link"
-    echo "$bv" >>"${bv_location}"
-    curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id="$telegram_chat_id" -d parse_mode=html -d text="<a href=\"${link}\">$videoTitle</a>%0A下载成功"
+    isDownloadedVideo=0
+    for file in "$folderName"*; do
+      if [ "${file##*.}" = "mp4" ] || [ "${file##*.}" = "flv" ] || [ "${file##*.}" = "mkv" ]; then
+        isDownloadedVideo=1
+        break
+      fi
+    done
+    downloadResult=""
+    if [ $isDownloadedVideo = 1 ]; then
+      echo "$bv" >>"${bv_location}"
+      downloadResult="下载成功"
+    else
+      downloadResult="下载出现异常"
+    fi
+    curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id="$telegram_chat_id" -d parse_mode=html -d text="<a href=\"${link}\">$videoTitle</a>%0A${downloadResult}"
     #记录此次任务中已下载的视频bv
     bvDownloaded[$BVCount]=$bv
     ((BVCount++))
