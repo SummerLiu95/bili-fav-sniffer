@@ -46,4 +46,13 @@ $ docker run -it --rm -v ${yourPathToRequiredDir}:/root/config -v ${specifiedVid
 ```
 
 ## 参考资料
-[自动下载B站收藏视频](https://blog.left.pink/archives/3073)
+[自动下载B站收藏视频](https://blog.left.pink/archives/3073)\
+[社交媒体｜RSSHub](https://docs.rsshub.app/social-media.html#bilibili)\
+[Telegram 创建 bot 获取 token 和 chatId 以及发送消息简明教程](https://hellodk.cn/post/743)
+
+## 感谢
+[Left024/BiliFavoritesDownloader](https://github.com/Left024/BiliFavoritesDownloader)\
+[you-get](https://github.com/soimort/you-get)\
+[FFmpeg](https://github.com/FFmpeg/FFmpeg)\
+[RSSHub](https://github.com/DIYgod/RSSHub)
+
