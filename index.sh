@@ -64,7 +64,7 @@ done
 
 BVCount=0
 bvDownloaded=()
-for(( i=0;i<${#infoArray[@]};i++)) do
+for(( i=${#infoArray[@]} - 1;i >= 0;i--)) do
   item=${infoArray[i]}
   linkSuffix=${item#*<link>}
   link=${linkSuffix%%</link>*}
@@ -112,7 +112,7 @@ for(( i=0;i<${#infoArray[@]};i++)) do
     bvDownloaded[$BVCount]=$bv
     ((BVCount++))
   else
-    break
+    continue
   fi
 done
 
