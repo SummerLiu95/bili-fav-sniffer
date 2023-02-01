@@ -94,7 +94,7 @@ for(( i=0;i<${#infoArray[@]};i++)) do
     curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id="$telegram_chat_id" -d parse_mode=html -d text="<a href=\"${link}\">$videoTitle</a>%0A开始下载"
     $you --playlist -c "$cookies_location" -o "$folderName" "$link"
     isDownloadedVideo=0
-    for file in "$folderName"*; do
+    for file in "$folderName"/*; do
       if [ "${file##*.}" = "mp4" ] || [ "${file##*.}" = "flv" ] || [ "${file##*.}" = "mkv" ]; then
         isDownloadedVideo=1
         break
