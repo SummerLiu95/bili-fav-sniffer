@@ -9,6 +9,7 @@ $ docker build -t bili-fav-sniffer .
 - [x] 配置文件
 - [x] 多个新收藏视频下载
 - [x] 修复视频下载是否成功的判断逻辑
+- [x] 调整视频下载顺序，保持跟收藏夹顺序一致
 
 ## 使用须知
 使用前需要创建一个目录，该目录下创建三个运行必备文件，`config.json`、`BV.txt`、`cookies.txt`
@@ -18,7 +19,8 @@ $ docker build -t bili-fav-sniffer .
   "telegram_bot_token": "TG 机器人 token值",
   "telegram_chat_id": "TG 机器人 chat id",
   "uid": "bilibili 用户 id",
-  "fid": "bilibili 收藏夹 id"
+  "fid": "bilibili 收藏夹 id",
+  "rssDomain": "RSS 服务地址，可以使用 https://rsshub.app"
 }
 ```
 
