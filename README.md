@@ -1,5 +1,5 @@
 # bili-fav-sniffer
-相信大家都会有一个困惑（特别是作为一名住在 B 站的程序员来说🤣）：收藏好的 B 站视频失效无法观看，可觉得太可惜了。此时这个工具就是为解决这种情况而诞生的。它会定期在某个特定收藏夹下载新收藏的视频
+相信大家都会有一个困惑（特别是作为一名住在 B 站的程序员来说🤣）：收藏好的 B 站视频失效无法观看，可觉得太可惜了。此时这个工具就是为解决这种情况而诞生的。它会定期在某个特定收藏夹下载新收藏的视频。
 ## 构建镜像
 ```bash
 $ docker build -t bili-fav-sniffer .
@@ -39,9 +39,11 @@ BV1TZ4y1t7dJ
 ......
 // bilibili cookie信息，用来下载 4k 清晰度视频
 ```
-
+获取cookies需要用到一个Chrome插件：[EditThisCookie](https://chrome.google.com/webstore/detail/editthiscookie/fngmhnnpilhplaeedifhccceomclgfbg)，以 Netscape HTTP Cookie File 方式导出文本到 txt 文件中
 ## 运行镜像
 ```bash
+# 从 docker hub 拉取镜像运行
+$ docker pull --rm -d --name ${nameOfContainer} -v ${yourPathToRequiredDir}:/root/config -v ${specifiedVideoDownloadDir}:/usr/you-get-download fish95/bili-fav-sniffer
 # 前台运行, 结束后删除该容器.
 $ docker run --rm --name ${nameOfContainer} -v ${yourPathToRequiredDir}:/root/config -v ${specifiedVideoDownloadDir}:/usr/you-get-download bili-fav-sniffer
 # 后台运行, 结束后删除该容器.
