@@ -1,3 +1,7 @@
+<div align=center>
+<img src="https://picbed-1253377077.cos.ap-guangzhou.myqcloud.com/img/202302121317373.png" width="300" height="300"/>
+</div>
+
 # bili-fav-sniffer
 相信大家都会有一个困惑（特别是作为一名住在 B 站的程序员来说🤣）：收藏好的 B 站视频失效无法观看，可觉得太可惜了。此时这个工具就是为解决这种情况而诞生的。它会定期在某个特定收藏夹下载新收藏的视频。
 ## 本地构建镜像
