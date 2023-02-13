@@ -18,6 +18,7 @@ $ docker build -t bili-fav-sniffer .
 - [x] 调整视频下载顺序，保持跟收藏夹顺序一致
 - [ ] 对 xml 弹幕转换成 srt
 - [x] 镜像瘦身
+- [ ] 动态定义 cron
 
 ## 使用须知
 使用前需要创建一个目录，该目录下创建三个运行必备文件，`config.json`、`BV.txt`、`cookies.txt`
