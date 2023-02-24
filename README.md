@@ -21,6 +21,8 @@ $ docker build -t bili-fav-sniffer .
 - [ ] 对 xml 弹幕转换成 srt
 - [x] 镜像瘦身
 - [ ] 动态定义 cron
+- [ ] 多收藏夹嗅探服务（容器）集群运行
+- [ ] 多系统架构支持
 
 ## 使用须知
 使用前需要创建一个目录，该目录下创建三个运行必备文件，`config.json`、`BV.txt`、`cookies.txt`
