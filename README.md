@@ -27,7 +27,7 @@ $ docker build -t bili-fav-sniffer .
 - [ ] 多系统架构支持
 
 ## 使用须知
-使用前需要创建一个目录，该目录下创建三个运行必备文件，`config.json`、`BV.txt`、`cookies.txt`
+使用前需要在 docker 宿主机创建一个目录，该目录下创建三个运行必备文件，`config.json`、`BV.txt`、`cookies.txt`
 ### config.json
 ```json
 {
