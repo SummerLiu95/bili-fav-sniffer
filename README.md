@@ -10,7 +10,7 @@
 ![服务通知展示](https://picbed-1253377077.cos.ap-guangzhou.myqcloud.com/img/202302110013607.jpg)
 ## 本地构建镜像
 ```bash
-$ docker build -t bili-fav-sniffer .
+docker build -t bili-fav-sniffer .
 ```
 ## DockerHub 镜像地址
 [fish95/bili-fav-sniffer](https://hub.docker.com/r/fish95/bili-fav-sniffer)
@@ -58,16 +58,16 @@ BV1TZ4y1t7dJ
 ## 运行镜像
 ```bash
 # 从 docker hub 拉取镜像运行
-$ docker pull --rm -d --name ${nameOfContainer} -v ${yourPathToRequiredDir}:/root/config -v ${specifiedVideoDownloadDir}:/usr/you-get-download fish95/bili-fav-sniffer
+docker pull --rm -d --name ${nameOfContainer} -v ${yourPathToRequiredDir}:/root/config -v ${specifiedVideoDownloadDir}:/usr/you-get-download fish95/bili-fav-sniffer
 
 # 前台运行, 结束后删除该容器.
-$ docker run --rm --name ${nameOfContainer} -v ${yourPathToRequiredDir}:/root/config -v ${specifiedVideoDownloadDir}:/usr/you-get-download bili-fav-sniffer
+docker run --rm --name ${nameOfContainer} -v ${yourPathToRequiredDir}:/root/config -v ${specifiedVideoDownloadDir}:/usr/you-get-download bili-fav-sniffer
 
 # 后台运行, 结束后删除该容器.
-$ docker run --rm -d --name ${nameOfContainer} -v ${yourPathToRequiredDir}:/root/config -v ${specifiedVideoDownloadDir}:/usr/you-get-download bili-fav-sniffer
+docker run --rm -d --name ${nameOfContainer} -v ${yourPathToRequiredDir}:/root/config -v ${specifiedVideoDownloadDir}:/usr/you-get-download bili-fav-sniffer
 
 # 调试镜像.
-$ docker run -it --rm -v ${yourPathToRequiredDir}:/root/config -v ${specifiedVideoDownloadDir}:/usr/you-get-download bili-fav-sniffer /bin/bash
+docker run -it --rm -v ${yourPathToRequiredDir}:/root/config -v ${specifiedVideoDownloadDir}:/usr/you-get-download bili-fav-sniffer /bin/bash
 ```
 
 ## 参考资料
