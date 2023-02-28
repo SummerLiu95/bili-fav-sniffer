@@ -22,8 +22,6 @@ response=$(curl -I -m 10 -o /dev/null -s -w %{http_code} "$rssURL")
 if [ "$response" != 200 ]; then
   curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id="$telegram_chat_id" -d parse_mode=html -d text="$rssURL: RSS 访问失效"
   exit
-else
-  curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id="$telegram_chat_id" -d parse_mode=html -d text="$rssURL: RSS 访问有效"
 fi
 
 #抓取rss更新
@@ -40,9 +38,7 @@ stat=$($you -i -l -c "$cookies_location" https://www.bilibili.com/video/BV1fK4y1
 subStat=${stat#*quality:}
 data=${subStat%%#*}
 quality=${data%%size*}
-if [[ $quality =~ "4K" ]]; then
-    curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id=$telegram_chat_id -d parse_mode=html -d text="$favTitle: Cookies 文件有效，进入检测更新逻辑"
-else
+if ! [[ $quality =~ "4K" ]]; then
     curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id=$telegram_chat_id -d parse_mode=html -d text="$favTitle: Cookies 文件失效，请更新后重试"
     exit
 fi
@@ -92,8 +88,7 @@ for(( i=${#infoArray[@]} - 1;i >= 0;i--)) do
     else
       wget "$photoLink" -O "$folderName/$videoTitle.png"
     fi
-    curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id="$telegram_chat_id" -d parse_mode=html -d text="<a href=\"${link}\">$videoTitle</a>%0A开始下载"
-    $you --playlist -c "$cookies_location" -o "$folderName" "$link"
+    $you --debug --playlist -c "$cookies_location" -o "$folderName" "$link"
     isDownloadedVideo=0
     for file in "$folderName"/*; do
       if [ "${file##*.}" = "mp4" ] || [ "${file##*.}" = "flv" ] || [ "${file##*.}" = "mkv" ]; then
