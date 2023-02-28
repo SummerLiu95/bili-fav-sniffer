@@ -73,7 +73,8 @@ for(( i=${#infoArray[@]} - 1;i >= 0;i--)) do
   bvCompareRes=$(echo "$oldBV" | grep "$bv")
   if [ "$bvCompareRes" = "" ]; then
     titleSuffix=${item#*\[CDATA\[}
-    videoTitle=${titleSuffix%%\]\]>*}
+    tempVideoTitle=${titleSuffix%%\]\]>*}
+    videoTitle=${tempVideoTitle//\//|}
     echo "videoTitle: $videoTitle"
     #此处为视频存储位置，自行修改
     folderName="$videoLocation$videoTitle"
