@@ -3,5 +3,6 @@
 .idea/
 .vscode/
 *.txt
-*.json
 config/
+node_modules/
+.next/
