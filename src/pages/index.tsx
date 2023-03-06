@@ -3,6 +3,7 @@ import styles from '@/styles/Home.module.css'
 import { Button, Form, Input, message } from 'antd';
 import React from 'react';
 import axios from 'axios';
+import { Data, Operation } from '@/const';
 
 const { TextArea } = Input;
 
@@ -22,7 +23,7 @@ export default function Home() {
 
     const onFinish = async (values: any) => {
         try {
-            const response: { data: { msg: string } } = await axios.post('/api/start', {
+            const response: { data: Data } = await axios.post('/api/job', {
                 ...values
             });
             messageApi.open({
@@ -34,9 +35,21 @@ export default function Home() {
         }
     };
 
-    const onReset = () => {
-        form.resetFields();
-    };
+    const onOperate = async (operation: number) => {
+        try {
+            const response: {data: {msg: string}} = await axios.get('/api/job', {
+                params: {
+                    operation
+                }
+            });
+            messageApi.open({
+                type: 'success',
+                content: response.data.msg,
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     return (
         <>
@@ -52,14 +65,14 @@ export default function Home() {
                     {...layout}
                     form={form}
                     name="control-hooks"
-                    initialValues={{rss_domain: 'https://rsshub.app'}}
+                    initialValues={{rss_domain: 'https://rsshub.app', cron: '0 10,19 * * *'}}
                     onFinish={onFinish}
                     className={styles.form}
                 >
                     <Form.Item
                         label="TG 推送"
                         style={{marginBottom: 0}}
-                        tooltip={<span>查阅<a style={{textDecoration: "underline"}} href="https://hellodk.cn/post/743">Telegram 创建 bot 获取 token 和 chatId 以及发送消息简明教程</a></span>}
+                        tooltip={<span>查阅<a style={{textDecoration: "underline"}} href="https://hellodk.cn/post/743">Telegram 创建 bot 获取 token 和 chatID 以及发送消息简明教程</a></span>}
                     >
                         <Form.Item
                             name="token"
@@ -68,7 +81,7 @@ export default function Home() {
                             <Input placeholder="请输入 TG token"/>
                         </Form.Item>
                         <Form.Item
-                            name="chatID"
+                            name="chat_id"
                             style={{display: 'inline-block', width: '50%', margin: '0 0 0 8px'}}
                         >
                             <Input placeholder="请输入 TG chat id"/>
@@ -98,15 +111,18 @@ export default function Home() {
                     <Form.Item name="rss_domain" label="RSSHub 服务" rules={[{required: true}]}>
                         <Input/>
                     </Form.Item>
+                    <Form.Item name="cron" label="Cron 定时" rules={[{required: true}]}>
+                        <Input/>
+                    </Form.Item>
                     <Form.Item name="cookies" label="Cookies">
                         <TextArea rows={8} style={{resize: 'none'}} placeholder="针对会员用户可以下载最高清晰度的视频，数据仅在本地，请放心使用～"/>
                     </Form.Item>
                     <Form.Item {...tailLayout} className={styles.buttons}>
                         <Button type="primary" htmlType="submit">
-                            Submit
+                            开启/更新任务
                         </Button>
-                        <Button htmlType="button" onClick={onReset} className={styles.reset}>
-                            Reset
+                        <Button htmlType="button" onClick={() => onOperate(Operation.stop)} className={styles.reset}>
+                            结束任务
                         </Button>
                     </Form.Item>
                 </Form>
