@@ -22,7 +22,7 @@ export default function Home() {
 
     const onFinish = async (values: any) => {
         try {
-            const response: {data: {msg: string}} = await axios.post('/api/start', {
+            const response: { data: { msg: string } } = await axios.post('/api/start', {
                 ...values
             });
             messageApi.open({
@@ -52,47 +52,56 @@ export default function Home() {
                     {...layout}
                     form={form}
                     name="control-hooks"
-                    initialValues={{ rss_domain: 'https://rsshub.app' }}
+                    initialValues={{rss_domain: 'https://rsshub.app'}}
                     onFinish={onFinish}
-                    style={{ width: '48%' }}
+                    className={styles.form}
                 >
-                    <Form.Item label="TG 推送" style={{ marginBottom: 0 }}>
+                    <Form.Item
+                        label="TG 推送"
+                        style={{marginBottom: 0}}
+                        tooltip={<span>查阅<a style={{textDecoration: "underline"}} href="https://hellodk.cn/post/743">Telegram 创建 bot 获取 token 和 chatId 以及发送消息简明教程</a></span>}
+                    >
                         <Form.Item
                             name="token"
-                            style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
+                            style={{display: 'inline-block', width: 'calc(50% - 8px)'}}
                         >
-                            <Input placeholder="Input TG token" />
+                            <Input placeholder="请输入 TG token"/>
                         </Form.Item>
                         <Form.Item
                             name="chatID"
-                            style={{ display: 'inline-block', width: '50%', margin: '0 0 0 8px' }}
+                            style={{display: 'inline-block', width: '50%', margin: '0 0 0 8px'}}
                         >
-                            <Input placeholder="Input TG chat id" />
+                            <Input placeholder="请输入 TG chat id"/>
                         </Form.Item>
                     </Form.Item>
-                    <Form.Item label="收藏夹" style={{ marginBottom: 0 }} required={true}>
+                    <Form.Item
+                        label="收藏夹"
+                        style={{marginBottom: 0}}
+                        required={true}
+                        tooltip={<span>查阅<a style={{textDecoration: "underline"}}
+                                              href="https://docs.rsshub.app/social-media.html#bilibili-up-zhu-fei-mo-ren-shou-cang-jia">社交媒体-bilibili up主非默认收藏夹｜RSSHub</a></span>}>
                         <Form.Item
                             name="uid"
-                            rules={[{ required: true }]}
-                            style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
+                            rules={[{required: true}]}
+                            style={{display: 'inline-block', width: 'calc(50% - 8px)'}}
                         >
-                            <Input placeholder="Input uid" />
+                            <Input placeholder="请输入 bilibili 用户uid"/>
                         </Form.Item>
                         <Form.Item
                             name="fid"
-                            rules={[{ required: true }]}
-                            style={{ display: 'inline-block', width: '50%', margin: '0 0 0 8px' }}
+                            rules={[{required: true}]}
+                            style={{display: 'inline-block', width: '50%', margin: '0 0 0 8px'}}
                         >
-                            <Input placeholder="Input fid" />
+                            <Input placeholder="请输入收藏夹fid"/>
                         </Form.Item>
                     </Form.Item>
-                    <Form.Item name="rss_domain" label="RSSHub 服务" rules={[{ required: true }]}>
-                        <Input />
+                    <Form.Item name="rss_domain" label="RSSHub 服务" rules={[{required: true}]}>
+                        <Input/>
                     </Form.Item>
                     <Form.Item name="cookies" label="Cookies">
-                        <TextArea rows={8} />
+                        <TextArea rows={8} style={{resize: 'none'}} placeholder="针对会员用户可以下载最高清晰度的视频，数据仅在本地，请放心使用～"/>
                     </Form.Item>
-                    <Form.Item {...tailLayout}>
+                    <Form.Item {...tailLayout} className={styles.buttons}>
                         <Button type="primary" htmlType="submit">
                             Submit
                         </Button>

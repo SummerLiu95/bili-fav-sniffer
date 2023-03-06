@@ -3,10 +3,24 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 6rem;
-  min-height: 100vh;
+  margin: 12rem;
+  height: calc(100vh - 24rem);
+  background-color: white;
+  box-shadow: 10px 5px 5px #0000000f;
+  border-radius: 2rem;
 }
 
 .reset {
   margin-left: 20px;
+}
+
+.form {
+  width: 46%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.buttons {
+  margin-bottom: 0;
 }
