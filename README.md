@@ -22,13 +22,15 @@ docker build -t bili-fav-sniffer .
 - [x] 调整视频下载顺序，保持跟收藏夹顺序一致
 - [ ] 对 xml 弹幕转换成 srt
 - [x] 镜像瘦身
-- [ ] 动态定义 cron
+- [x] 动态定义 cron
 - [ ] 多收藏夹嗅探服务（容器）集群运行
 - [ ] 多系统架构支持
 - [ ] 推送消息方式的增加和选择
-- [ ] 增加用户配置界面，以及定时服务的控制功能
+- [x] 增加用户配置界面，以及定时服务的控制功能
+- [ ] 进入配置页面读取最近的配置参数
+- [ ] 页面增加服务的运行控制台展示
 
-## 使用须知
+## ~~使用须知~~
 使用前需要在 docker 宿主机创建一个目录，该目录下创建两个运行必备文件，`config.json`、`BV.txt`。还有一个非必备文件`cookies.txt`，该文件可以帮助下载对应bilibili账号可观看的最高分辨率视频，主要针对的是会员帐号。
 ### config.json
 ```json
@@ -55,7 +57,7 @@ BV1TZ4y1t7dJ
 // bilibili cookie信息，用来下载 4k 清晰度视频
 ```
 获取cookies需要用到一个Chrome插件：[EditThisCookie](https://chrome.google.com/webstore/detail/editthiscookie/fngmhnnpilhplaeedifhccceomclgfbg)，以 Netscape HTTP Cookie File 方式导出文本到 txt 文件中
-## 运行镜像
+## ~~运行镜像~~
 ```bash
 # 从 docker hub 拉取镜像运行
 docker pull --rm -d --name ${nameOfContainer} -v ${yourPathToRequiredDir}:/root/config -v ${specifiedVideoDownloadDir}:/usr/you-get-download fish95/bili-fav-sniffer
@@ -73,7 +75,7 @@ docker run -it --rm -v ${yourPathToRequiredDir}:/root/config -v ${specifiedVideo
 ## 参考资料
 [自动下载B站收藏视频](https://blog.left.pink/archives/3073)\
 [社交媒体-bilibili up主非默认收藏夹｜RSSHub](https://docs.rsshub.app/social-media.html#bilibili-up-zhu-fei-mo-ren-shou-cang-jia)\
-[Telegram 创建 bot 获取 token 和 chatId 以及发送消息简明教程](https://hellodk.cn/post/743)
+[Telegram 创建 bot 获取 token 和 chatID 以及发送消息简明教程](https://hellodk.cn/post/743)
 
 ## 感谢
 [Left024/BiliFavoritesDownloader](https://github.com/Left024/BiliFavoritesDownloader)\
