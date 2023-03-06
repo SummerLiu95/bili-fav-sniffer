@@ -11,7 +11,7 @@ export default function handler(
     req: NextApiRequest,
     res: NextApiResponse<Data>
 ) {
-    if (req.method === 'post') {
+    if (req.method === 'POST') {
         const config = {
             telegram_bot_token: req.body['token'] || '',
             telegram_chat_id: req.body['chat_id'] || '',
@@ -32,7 +32,7 @@ export default function handler(
             })
             res.status(200).json({ msg: '成功开启任务', code: 200 })
         }
-    } else if (req.method === 'get') {
+    } else if (req.method === 'GET') {
         if (job) {
             cancelJob(job as Job);
             res.status(200).json({ msg: '成功结束任务', code: 200 })
