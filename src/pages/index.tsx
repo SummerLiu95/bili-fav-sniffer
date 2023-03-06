@@ -12,7 +12,7 @@ const layout = {
 };
 
 const tailLayout = {
-    wrapperCol: {offset: 8, span: 16},
+    wrapperCol: {offset: 5, span: 16},
 };
 
 export default function Home() {
@@ -52,25 +52,44 @@ export default function Home() {
                     {...layout}
                     form={form}
                     name="control-hooks"
+                    initialValues={{ rss_domain: 'https://rsshub.app' }}
                     onFinish={onFinish}
-                    style={{ width: '25%' }}
+                    style={{ width: '48%' }}
                 >
-                    <Form.Item name="token" label="TG 推送 token">
-                        <Input />
+                    <Form.Item label="TG 推送" style={{ marginBottom: 0 }}>
+                        <Form.Item
+                            name="token"
+                            style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
+                        >
+                            <Input placeholder="Input TG token" />
+                        </Form.Item>
+                        <Form.Item
+                            name="chatID"
+                            style={{ display: 'inline-block', width: '50%', margin: '0 0 0 8px' }}
+                        >
+                            <Input placeholder="Input TG chat id" />
+                        </Form.Item>
                     </Form.Item>
-                    <Form.Item name="chatID" label="TG 聊天 chat id">
-                        <Input />
-                    </Form.Item>
-                    <Form.Item name="uid" label="uid" rules={[{ required: true }]}>
-                        <Input />
-                    </Form.Item>
-                    <Form.Item name="fid" label="fid" rules={[{ required: true }]}>
-                        <Input />
+                    <Form.Item label="收藏夹" style={{ marginBottom: 0 }} required={true}>
+                        <Form.Item
+                            name="uid"
+                            rules={[{ required: true }]}
+                            style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
+                        >
+                            <Input placeholder="Input uid" />
+                        </Form.Item>
+                        <Form.Item
+                            name="fid"
+                            rules={[{ required: true }]}
+                            style={{ display: 'inline-block', width: '50%', margin: '0 0 0 8px' }}
+                        >
+                            <Input placeholder="Input fid" />
+                        </Form.Item>
                     </Form.Item>
                     <Form.Item name="rss_domain" label="RSSHub 服务" rules={[{ required: true }]}>
                         <Input />
                     </Form.Item>
-                    <Form.Item name="cookies" label="cookies">
+                    <Form.Item name="cookies" label="Cookies">
                         <TextArea rows={8} />
                     </Form.Item>
                     <Form.Item {...tailLayout}>
