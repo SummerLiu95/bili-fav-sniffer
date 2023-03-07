@@ -6,4 +6,5 @@ export enum Operation {
 export type Data = {
     code: number;
     msg: string;
+    data?: object;
 }
