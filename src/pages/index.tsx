@@ -1,11 +1,10 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
-import { Button, Form, Input, message } from 'antd';
+import {Button, Form, Input, message} from 'antd';
 import React from 'react';
-import axios from 'axios';
-import { Data, Operation } from '@/const';
+import {Operation} from '@/const';
 
-const { TextArea } = Input;
+const {TextArea} = Input;
 
 const layout = {
     labelCol: {span: 5},
@@ -23,30 +22,46 @@ export default function Home() {
 
     const onFinish = async (values: any) => {
         try {
-            const response: { data: Data } = await axios.post('/api/job', {
-                ...values
+            const response = await fetch('/api/job', {
+                method: 'POST',
+                body: JSON.stringify(values),
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                }
             });
+            if (!response.ok) {
+                throw Error(response.statusText)
+            }
+            const data = await response.json();
             messageApi.open({
                 type: 'success',
-                content: response.data.msg,
+                content: data.msg,
             });
         } catch (error) {
+            messageApi.open({
+                type: 'error',
+                content: `${error}`,
+            });
             console.error(error);
         }
     };
 
     const onOperate = async (operation: number) => {
         try {
-            const response: {data: {msg: string}} = await axios.get('/api/job', {
-                params: {
-                    operation
-                }
-            });
+            const response = await fetch(`/api/job?operation=${operation}`);
+            if (!response.ok) {
+                throw Error(response.statusText)
+            }
+            const data = await response.json();
             messageApi.open({
                 type: 'success',
-                content: response.data.msg,
+                content: data.msg,
             });
         } catch (error) {
+            messageApi.open({
+                type: 'error',
+                content: `${error}`,
+            });
             console.error(error);
         }
     }
@@ -115,7 +130,8 @@ export default function Home() {
                         <Input/>
                     </Form.Item>
                     <Form.Item name="cookies" label="Cookies">
-                        <TextArea rows={8} style={{resize: 'none'}} placeholder="针对会员用户可以下载最高清晰度的视频，数据仅在本地，请放心使用～"/>
+                        <TextArea rows={8} style={{resize: 'none'}}
+                                  placeholder="针对会员用户可以下载最高清晰度的视频，数据仅在本地，请放心使用～"/>
                     </Form.Item>
                     <Form.Item {...tailLayout} className={styles.buttons}>
                         <Button type="primary" htmlType="submit">
