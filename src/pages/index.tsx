@@ -111,7 +111,7 @@ export default function Home() {
                     <Form.Item
                         label="TG 推送"
                         style={{marginBottom: 0}}
-                        tooltip={<span>查阅<a style={{textDecoration: "underline"}} href="https://hellodk.cn/post/743">Telegram 创建 bot 获取 token 和 chatID 以及发送消息简明教程</a></span>}
+                        tooltip={<span>查阅<a target="_blank" style={{textDecoration: "underline"}} href="https://hellodk.cn/post/743">Telegram 创建 bot 获取 token 和 chatID 以及发送消息简明教程</a></span>}
                     >
                         <Form.Item
                             name="telegram_bot_token"
@@ -130,7 +130,7 @@ export default function Home() {
                         label="收藏夹"
                         style={{marginBottom: 0}}
                         required={true}
-                        tooltip={<span>查阅<a style={{textDecoration: "underline"}}
+                        tooltip={<span>查阅<a target="_blank" style={{textDecoration: "underline"}}
                                               href="https://docs.rsshub.app/social-media.html#bilibili-up-zhu-fei-mo-ren-shou-cang-jia">社交媒体-bilibili up主非默认收藏夹｜RSSHub</a></span>}>
                         <Form.Item
                             name="uid"
