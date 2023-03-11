@@ -39,7 +39,7 @@ WORKDIR /app
 RUN chmod -R 777 /app && \
     apk update && \
     apk upgrade && \
-    apk add --no-cache curl bash jq ffmpeg tzdata py3-configobj py3-pip py3-setuptools python3 python3-dev && \
+    apk add --no-cache curl bash jq ffmpeg tzdata py3-configobj py3-pip py3-setuptools python3 python3-dev vim && \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     echo "Shanghai/Asia" > /etc/timezone && \
     rm -rf /var/cache/apk/* && \
