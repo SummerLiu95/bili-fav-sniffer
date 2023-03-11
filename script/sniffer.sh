@@ -9,13 +9,13 @@ telegram_bot_token=$(jq -c -r .telegram_bot_token "$dirLocation"/config.json)
 telegram_chat_id=$(jq -c -r .telegram_chat_id "$dirLocation"/config.json)
 uid=$(jq -c -r .uid "$dirLocation"/config.json)
 fid=$(jq -c -r .fid "$dirLocation"/config.json)
-rssDomain=$(jq -c -r .rssDomain "$dirLocation"/config.json)
+rss_domain=$(jq -c -r .rss_domain "$dirLocation"/config.json)
 videoLocation="/usr/you-get-download/"
 cookies_location="$dirLocation"/cookies.txt
 bv_location="$dirLocation"/BV.txt
 
 favURL="https://space.bilibili.com/$uid/favlist?fid=$fid"
-rssURL="$rssDomain/bilibili/fav/$uid/$fid/1"
+rssURL="$rss_domain/bilibili/fav/$uid/$fid/1"
 
 #rss 可访问性检测
 response=$(curl -I -m 10 -o /dev/null -s -w %{http_code} "$rssURL")
