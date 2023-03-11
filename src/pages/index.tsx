@@ -2,7 +2,7 @@ import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
 import {Button, Form, Input, message} from 'antd';
 import React, {useEffect, useState} from 'react';
-import {Operation} from '@/const';
+import {EasterEgg, Operation} from '@/const';
 
 const {TextArea} = Input;
 
@@ -30,15 +30,7 @@ export default function Home() {
             "color: #fadfa3; background: #030307; padding:5px 0; font-size:18px;",
             "background: #fadfa3; padding:5px 0; font-size:18px;"
         );
-        console.log(' __           ___                     ___                                                 ___    ___               \n' +
-            '/\\ \\      __ /\\_ \\    __            /\'___\\                                          __  /\'___\\ /\'___\\              \n' +
-            '\\ \\ \\____/\\_\\\\//\\ \\  /\\_\\          /\\ \\__/   __     __  __             ____    ___ /\\_\\/\\ \\__//\\ \\__/   __   _ __  \n' +
-            ' \\ \\ \'__`\\/\\ \\ \\ \\ \\ \\/\\ \\  _______\\ \\ ,__\\/\'__`\\  /\\ \\/\\ \\  _______  /\',__\\ /\' _ `\\/\\ \\ \\ ,__\\ \\ ,__\\/\'__`\\/\\`\'__\\\n' +
-            '  \\ \\ \\L\\ \\ \\ \\ \\_\\ \\_\\ \\ \\/\\______\\\\ \\ \\_/\\ \\L\\.\\_\\ \\ \\_/ |/\\______\\/\\__, `\\/\\ \\/\\ \\ \\ \\ \\ \\_/\\ \\ \\_/\\  __/\\ \\ \\/ \n' +
-            '   \\ \\_,__/\\ \\_\\/\\____\\\\ \\_\\/______/ \\ \\_\\\\ \\__/.\\_\\\\ \\___/ \\/______/\\/\\____/\\ \\_\\ \\_\\ \\_\\ \\_\\  \\ \\_\\\\ \\____\\\\ \\_\\ \n' +
-            '    \\/___/  \\/_/\\/____/ \\/_/          \\/_/ \\/__/\\/_/ \\/__/            \\/___/  \\/_/\\/_/\\/_/\\/_/   \\/_/ \\/____/ \\/_/ \n' +
-            '                                                                                                                   \n' +
-            '                                                                                                                   ')
+        console.log(EasterEgg)
         fetch('/api/config')
             .then(response => response.json())
             .then(data => {
