@@ -18,16 +18,17 @@ export default function handler(
         jsonParser(req, res, function () {
             try {
                 const config = {
-                    telegram_bot_token: req.body['token'] || '',
-                    telegram_chat_id: req.body['chat_id'] || '',
+                    telegram_bot_token: req.body['telegram_bot_token'] || '',
+                    telegram_chat_id: req.body['telegram_chat_id'] || '',
                     uid: req.body['uid'],
                     fid: req.body['fid'],
-                    rssDomain: req.body['rss_domain'],
-                    cron: req.body['cron'] || ''
+                    rss_domain: req.body['rss_domain'],
+                    cron: req.body['cron'] || '',
+                    cookies: req.body['cookies'] || ''
                 }
                 let resMsg;
                 writeFileSync('/app/config.json', JSON.stringify(config, null, 2))
-                writeFileSync('/app/cookies.txt', req.body['cookies'] || '');
+                writeFileSync('/app/cookies.txt', config.cookies);
                 writeFileSync('/app/BV.txt', '');
                 if (job) {
                     rescheduleJob(job, req.body['cron']);

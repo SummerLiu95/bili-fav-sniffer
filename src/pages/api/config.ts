@@ -15,9 +15,9 @@ export default function handler(
             }
 
             const obj = JSON.parse(data);
-            res.status(200).json({ msg: '读取配置文件发生错误', code: 500, data: obj })
+            res.status(200).json({ msg: '成功读取配置文件', code: 200, data: obj })
         });
     } else {
-        res.status(200).json({ msg: '配置文件不存在', code: 500 })
+        res.status(200).json({ msg: '配置文件还未创建', code: 205, data: {} })
     }
 }

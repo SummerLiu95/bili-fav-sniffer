@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
 import {Button, Form, Input, message} from 'antd';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Operation} from '@/const';
 
 const {TextArea} = Input;
@@ -18,7 +18,21 @@ const tailLayout = {
 export default function Home() {
     const [form] = Form.useForm();
     const [messageApi, contextHolder] = message.useMessage();
+    const [formData, setFormData] = useState({});
 
+    useEffect(() => {
+        // 从 API 获取数据
+        fetch('/api/config')
+            .then(response => response.json())
+            .then(data => {
+                setFormData(data.data);
+            })
+            .catch(error => console.error(error));
+    }, []);
+
+    useEffect(() => {
+        form.setFieldsValue(formData);
+    }, [formData, form]);
 
     const onFinish = async (values: any) => {
         try {
@@ -90,13 +104,13 @@ export default function Home() {
                         tooltip={<span>查阅<a style={{textDecoration: "underline"}} href="https://hellodk.cn/post/743">Telegram 创建 bot 获取 token 和 chatID 以及发送消息简明教程</a></span>}
                     >
                         <Form.Item
-                            name="token"
+                            name="telegram_bot_token"
                             style={{display: 'inline-block', width: 'calc(50% - 8px)'}}
                         >
                             <Input placeholder="请输入 TG token"/>
                         </Form.Item>
                         <Form.Item
-                            name="chat_id"
+                            name="telegram_chat_id"
                             style={{display: 'inline-block', width: '50%', margin: '0 0 0 8px'}}
                         >
                             <Input placeholder="请输入 TG chat id"/>
