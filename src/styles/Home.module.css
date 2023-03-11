@@ -3,10 +3,10 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  margin: 12rem;
+  margin: 12rem 26rem;
   height: calc(100vh - 24rem);
   background-color: white;
-  box-shadow: 10px 5px 5px #0000000f;
+  box-shadow: 10px 8px 8px #0000000f;
   border-radius: 2rem;
 }
 
