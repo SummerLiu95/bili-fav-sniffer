@@ -10,6 +10,7 @@ telegram_chat_id=$(jq -c -r .telegram_chat_id "$dirLocation"/config.json)
 uid=$(jq -c -r .uid "$dirLocation"/config.json)
 fid=$(jq -c -r .fid "$dirLocation"/config.json)
 rss_domain=$(jq -c -r .rss_domain "$dirLocation"/config.json)
+cookies=$(jq -c -r .cookies "$dirLocation"/config.json)
 videoLocation="/usr/you-get-download/"
 cookies_location="$dirLocation"/cookies.txt
 bv_location="$dirLocation"/BV.txt
@@ -34,13 +35,15 @@ favTitle=${temp%%\]\]>*}
 echo "favTitle: $favTitle"
 
 #Cookies可用性检查
-stat=$($you -i -l -c "$cookies_location" https://www.bilibili.com/video/BV1fK4y1t7hj)
-subStat=${stat#*quality:}
-data=${subStat%%#*}
-quality=${data%%size*}
-if ! [[ $quality =~ "4K" ]] && [ "$telegram_bot_token" != "" ]; then
-    curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id=$telegram_chat_id -d parse_mode=html -d text="$favTitle: Cookies 文件失效，请更新后重试"
-    exit
+if [ "$cookies" != "" ]; then
+    stat=$($you -i -l -c "$cookies_location" https://www.bilibili.com/video/BV1fK4y1t7hj)
+    subStat=${stat#*quality:}
+    data=${subStat%%#*}
+    quality=${data%%size*}
+    if ! [[ $quality =~ "4K" ]] && [ "$telegram_bot_token" != "" ]; then
+        curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id=$telegram_chat_id -d parse_mode=html -d text="$favTitle: Cookies 文件失效，请更新后重试"
+        exit
+    fi
 fi
 
 #获取视频列表信息
@@ -88,7 +91,11 @@ for(( i=${#infoArray[@]} - 1;i >= 0;i--)) do
     else
       wget "$photoLink" -O "$folderName/$videoTitle.png"
     fi
-    $you --debug --playlist -c "$cookies_location" -o "$folderName" "$link"
+    if [ "$cookies" != "" ]; then
+        $you --debug --playlist -c "$cookies_location" -o "$folderName" "$link"
+    else
+        $you --debug --playlist -o "$folderName" "$link"
+    fi
     isDownloadedVideo=0
     for file in "$folderName"/*; do
       if [ "${file##*.}" = "mp4" ] || [ "${file##*.}" = "flv" ] || [ "${file##*.}" = "mkv" ]; then

@@ -19,6 +19,7 @@ export default function Home() {
     const [form] = Form.useForm();
     const [messageApi, contextHolder] = message.useMessage();
     const [formData, setFormData] = useState({});
+    const [nextInvocationTime, setInvocationTime] = useState('');
 
     useEffect(() => {
         // 从 API 获取数据
@@ -47,6 +48,7 @@ export default function Home() {
                 throw Error(response.statusText)
             }
             const data = await response.json();
+            setInvocationTime(data.data.nextInvocationTime);
             messageApi.open({
                 type: 'success',
                 content: data.msg,
@@ -155,6 +157,7 @@ export default function Home() {
                             结束任务
                         </Button>
                     </Form.Item>
+                    {nextInvocationTime && <p>下次执行时间：{new Date(nextInvocationTime).toLocaleString()}</p>}
                 </Form>
             </main>
         </>
