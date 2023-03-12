@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type {NextApiRequest, NextApiResponse} from 'next'
 import {exec} from 'node:child_process';
-import {writeFileSync} from 'node:fs'
+import {existsSync, writeFileSync} from 'node:fs'
 import {scheduleJob, rescheduleJob, cancelJob, Job} from 'node-schedule';
 import {Data} from '@/const';
 import bodyParser from 'body-parser';
@@ -29,7 +29,9 @@ export default function handler(
                 let resMsg;
                 writeFileSync('/app/config.json', JSON.stringify(config, null, 2))
                 writeFileSync('/app/cookies.txt', config.cookies);
-                writeFileSync('/app/BV.txt', '');
+                if (!existsSync('/app/BV.txt')) {
+                    writeFileSync('/app/BV.txt', '');
+                }
                 if (job) {
                     rescheduleJob(job, config.cron);
                     resMsg = '成功更新任务';
