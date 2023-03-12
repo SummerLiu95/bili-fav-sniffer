@@ -14,6 +14,14 @@ docker run --name ${nameOfContainer} -p 3000:3000 -v ${yourPathToRequiredDir}:/u
 ```
 然后打开配置页面地址填写必要信息即可开启嗅探服务～
 
+## 主要功能
+- 嗅探新收藏视频（第一次会将最近收藏的20条视频下载，后续运行只会下载新收藏视频）
+- 可以随时控制任务的停止开启以及运行时间
+- 通知推送
+- 最高可以下载视频的最高分辨率视频（需要填入cookies）
+- 下载收藏的视频时可以下载封面和弹幕
+
+
 ## DockerHub 镜像地址
 [fish95/bili-fav-sniffer](https://hub.docker.com/r/fish95/bili-fav-sniffer)
 
