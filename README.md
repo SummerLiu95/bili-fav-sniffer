@@ -16,6 +16,7 @@ docker run --name ${nameOfContainer} -p 3000:3000 -v ${yourPathToRequiredDir}:/u
 
 ## 主要功能
 - 嗅探新收藏视频（第一次会将最近收藏的20条视频下载，后续运行只会下载新收藏视频）
+- 某次运行下载未成功视频会在下次运行中重新尝试直到成功下载为止
 - 可以随时控制任务的停止开启以及运行时间
 - 通知推送
 - 最高可以下载视频的最高分辨率视频（需要填入cookies）
@@ -39,6 +40,7 @@ docker run --name ${nameOfContainer} -p 3000:3000 -v ${yourPathToRequiredDir}:/u
 - [x] 增加用户配置界面，以及定时服务的控制功能
 - [x] 进入配置页面读取最近的配置参数
 - [ ] 页面增加服务的运行控制台展示（容器Web Console技术实现）
+- [ ] 解决潜在的用户权限问题
 
 ## 使用须知
 
