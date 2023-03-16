@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type {NextApiRequest, NextApiResponse} from 'next'
-import {exec} from 'node:child_process';
+import {spawn} from 'node:child_process';
 import {existsSync, writeFileSync} from 'node:fs'
 import {scheduleJob, rescheduleJob, cancelJob, Job} from 'node-schedule';
 import {Data} from '@/const';
@@ -37,7 +37,13 @@ export default function handler(
                     resMsg = '成功更新任务';
                 } else {
                     job = scheduleJob(config.cron, function () {
-                        exec('/app/sniffer.sh')
+                        const child = spawn('/bin/bash', ['/app/sniffer.sh']);
+
+                        //将子进程的标准输出流附加到父进程的流中
+                        child.stdout.pipe(process.stdout);
+
+                        //将子进程的标准错误流附加到父进程的流中
+                        child.stderr.pipe(process.stderr);
                     })
                     resMsg = '成功开启任务';
                 }
