@@ -5,7 +5,7 @@
 # bili-fav-sniffer
 相信大家都会有一个困惑（特别是作为一名住在 B 站的程序员来说🤣）：收藏好的 B 站视频失效无法观看，觉得可太可惜了。此时这个工具就是为解决这种情况而诞生的。它会定期检测某个特定收藏夹是否有新收藏但未下载的视频，如果有即下载新收藏的视频。
 
-**建议该服务运行在有科学冲浪环境的软路由、VPS 或 NAS 中，因为 RSSHub 服务直连有较大概率失败（当然 RSSHub 服务也可以自己本地部署）**。
+**建议该服务运行在有科学冲浪环境的软路由、VPS 或 NAS 等一些能够不停机的“服务器”，因为 RSSHub 服务直连有较大概率失败（当然 RSSHub 服务也可以自己本地部署来解决这个问题）**。
 ![](https://picbed-1253377077.cos.ap-guangzhou.myqcloud.com/img/202303111755903.png)
 
 ## 使用运行
@@ -44,7 +44,7 @@ docker run
 - [ ] 推送消息方式的增加和选择
 - [x] 增加用户配置界面，以及定时服务的控制功能
 - [x] 进入配置页面读取最近的配置参数
-- [ ] 页面增加服务的运行控制台展示或者日志输出（容器Web Console技术实现）
+- [x] 增加脚本执行控制台输出到日志
 - [ ] 解决潜在的用户权限问题
 - [ ] 解决文件夹命名乱码问题（可能是由于符号问题，例如空格、?、*、$ 等。最好使用字母、数字、下划线和连字符）
 - [ ] 考虑用户扫码登入bili账号下载会员清晰度视频
@@ -69,17 +69,6 @@ docker run --rm -d --name ${nameOfContainer} -p 3000:3000 -v ${specifiedVideoDow
 docker run -it --rm -p 3000:3000 -v ${specifiedVideoDownloadDir}:/usr/you-get-download bili-fav-sniffer /bin/bash
 ```
 
-## 参考资料
-[自动下载B站收藏视频](https://blog.left.pink/archives/3073)\
-[社交媒体-bilibili up主非默认收藏夹｜RSSHub](https://docs.rsshub.app/social-media.html#bilibili-up-zhu-fei-mo-ren-shou-cang-jia)\
-[Telegram 创建 bot 获取 token 和 chatID 以及发送消息简明教程](https://hellodk.cn/post/743)
-
-## 感谢
-[Left024/BiliFavoritesDownloader](https://github.com/Left024/BiliFavoritesDownloader)\
-[you-get](https://github.com/soimort/you-get)\
-[FFmpeg](https://github.com/FFmpeg/FFmpeg)\
-[RSSHub](https://github.com/DIYgod/RSSHub)
-
 ## 免责声明
 1. 本工具仅供学习研究使用，用户在使用过程中应遵守国家法律法规，不得将本工具用于非法用途，如侵犯他人合法权益等。
 
@@ -95,7 +84,18 @@ docker run -it --rm -p 3000:3000 -v ${specifiedVideoDownloadDir}:/usr/you-get-do
 
 7. 您在下载、使用本工具以及使用本项目的过程中，即视为您已经仔细阅读并完全同意本声明的所有条款，如有异议，请立即停止使用本工具。
 
+## 参考资料
+[自动下载B站收藏视频](https://blog.left.pink/archives/3073)\
+[社交媒体-bilibili up主非默认收藏夹｜RSSHub](https://docs.rsshub.app/social-media.html#bilibili-up-zhu-fei-mo-ren-shou-cang-jia)\
+[Telegram 创建 bot 获取 token 和 chatID 以及发送消息简明教程](https://hellodk.cn/post/743)
+
+## 感谢
+[Left024/BiliFavoritesDownloader](https://github.com/Left024/BiliFavoritesDownloader)\
+[you-get](https://github.com/soimort/you-get)\
+[FFmpeg](https://github.com/FFmpeg/FFmpeg)\
+[RSSHub](https://github.com/DIYgod/RSSHub)
+
 ## P.S.
-本项目中一些代码由 ChatGPT 输出，感谢 ChatGPT 哈哈哈哈。我就是个代码黏合怪哈哈哈哈哈～
+本项目中一些代码由 ChatGPT 输出，感谢 ChatGPT 哈哈哈哈。我只是个代码黏合怪哈哈哈哈哈～
 
 
