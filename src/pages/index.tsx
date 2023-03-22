@@ -2,7 +2,7 @@ import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
 import {Button, Form, Input, message} from 'antd';
 import React, {useEffect, useState} from 'react';
-import {EasterEgg, Operation} from '@/const';
+import {EasterEgg} from '@/const';
 
 const {TextArea} = Input;
 
@@ -37,13 +37,19 @@ export default function Home() {
                 setFormData(data.data);
             })
             .catch(error => console.error(error));
+        fetch('/api/job')
+            .then(response => response.json())
+            .then(data => {
+                setInvocationTime(data?.data.nextInvocationTime);
+            })
+            .catch(error => console.error(error));
     }, []);
 
     useEffect(() => {
         form.setFieldsValue(formData);
     }, [formData, form]);
 
-    const onFinish = async (values: any) => {
+    const onSubmit = async (values: any) => {
         try {
             const response = await fetch('/api/job', {
                 method: 'POST',
@@ -70,13 +76,16 @@ export default function Home() {
         }
     };
 
-    const onOperate = async (operation: number) => {
+    const onTerminate = async () => {
         try {
-            const response = await fetch(`/api/job?operation=${operation}`);
+            const response = await fetch('/api/job', {
+                method: 'DELETE'
+            });
             if (!response.ok) {
                 throw Error(response.statusText)
             }
             const data = await response.json();
+            setInvocationTime(data.data.nextInvocationTime);
             messageApi.open({
                 type: 'success',
                 content: data.msg,
@@ -105,7 +114,7 @@ export default function Home() {
                     form={form}
                     name="control-hooks"
                     initialValues={{rss_domain: 'https://rsshub.app', cron: '0 10,19 * * *'}}
-                    onFinish={onFinish}
+                    onFinish={onSubmit}
                     className={styles.form}
                 >
                     <Form.Item
@@ -161,13 +170,13 @@ export default function Home() {
                         <Button type="primary" htmlType="submit">
                             开启/更新任务
                         </Button>
-                        <Button htmlType="button" onClick={() => onOperate(Operation.stop)} className={styles.reset}>
+                        <Button htmlType="button" onClick={onTerminate} className={styles.reset} disabled={!nextInvocationTime}>
                             结束任务
                         </Button>
                     </Form.Item>
-                    {nextInvocationTime && <Form.Item label="下次执行时间">
-                        <span>{new Date(nextInvocationTime).toLocaleString()}</span>
-                    </Form.Item>}
+                    <Form.Item label="下次执行时间">
+                        <span>{nextInvocationTime ? new Date(nextInvocationTime).toLocaleString() : '暂未有任务运行中'}</span>
+                    </Form.Item>
                 </Form>
             </main>
         </>
