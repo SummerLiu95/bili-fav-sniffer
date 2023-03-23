@@ -10,12 +10,11 @@
 
 ## 使用运行
 ```bash
-docker run
-  --platform linux/amd64     # 根据自己的平台二选一，linux/amd64 或者 linux/arm64
-  --name ${nameOfContainer} 
-  -p 3000:3000               # 这里的主机端口可以自定义
-  -v ${yourPathToRequiredDir}:/usr/you-get-download  
-  fish95/bili-fav-sniffer 
+docker run \
+  --name ${nameOfContainer} \
+  -p 3000:3000 \             
+  -v ${yourPathToRequiredDir}:/usr/you-get-download \
+  fish95/bili-fav-sniffer
 ```
 然后打开配置页面地址填写必要信息即可开启嗅探服务～
 
@@ -26,6 +25,7 @@ docker run
 - 通知推送
 - 最高可以下载视频的最高分辨率视频（需要填入cookies）
 - 下载收藏的视频时可以下载封面和弹幕
+- 视频合集下载
 
 
 ## DockerHub 镜像地址
@@ -36,17 +36,24 @@ docker run
 - [x] 多个新收藏视频下载
 - [x] 修复视频下载是否成功得判断逻辑
 - [x] 调整视频下载顺序，保持跟收藏夹顺序一致
-- [ ] 对 xml 弹幕转换成 srt
 - [x] 镜像瘦身
 - [x] 动态定义 cron
-- [ ] 多收藏夹嗅探服务（容器）集群运行（目前还在考虑是否重构为可同时配置多个收藏夹）
 - [x] 多系统架构支持（linux/amd64, linux/arm64)
-- [ ] 推送消息方式的增加和选择
 - [x] 增加用户配置界面，以及定时服务的控制功能
 - [x] 进入配置页面读取最近的配置参数
 - [x] 增加脚本执行控制台输出到日志
+- [ ] 解决页面分辨率兼容问题
+- [ ] 将收藏夹uid fid输入框更改为收藏夹 url 地址
+- [ ] RSSHub URL 校验
+- [ ] 增加控制台输出页面
+- [ ] 对 xml 弹幕转换成 srt
+- [ ] 推送消息方式的增加和选择
+- [ ] 增加配置文件的导入导出，避免每次都需要手动填写
+- [ ] 增加配置的有效性测试
+- [ ] cron 易用性问题
 - [ ] 解决潜在的用户权限问题
-- [ ] 解决文件夹命名乱码问题（可能是由于符号问题，例如空格、?、*、$ 等。最好使用字母、数字、下划线和连字符）
+
+## Roadmap
 - [ ] 考虑用户扫码登入bili账号下载会员清晰度视频
 - [ ] 考虑接入bili官方收藏夹接口替换 RssHub
 
