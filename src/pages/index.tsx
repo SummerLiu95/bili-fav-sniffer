@@ -137,26 +137,30 @@ export default function Home() {
                     </Form.Item>
                     <Form.Item
                         label="收藏夹"
-                        style={{marginBottom: 0}}
-                        required={true}
+                        name="fav_url"
+                        rules={[
+                            {   required: true,
+                                message: '请输入收藏夹链接'
+                            },
+                            {
+                                pattern: new RegExp('^https?:\\/\\/space\\.bilibili\\.com\\/.+?\\/favlist\\?fid=.+?$'),
+                                message: '请输入正确的收藏夹地址'
+                            }
+                        ]}
                         tooltip={<span>查阅<a target="_blank" style={{textDecoration: "underline"}}
                                               href="https://docs.rsshub.app/social-media.html#bilibili-up-zhu-fei-mo-ren-shou-cang-jia">社交媒体-bilibili up主非默认收藏夹｜RSSHub</a></span>}>
-                        <Form.Item
-                            name="uid"
-                            rules={[{required: true}]}
-                            style={{display: 'inline-block', width: 'calc(50% - 8px)'}}
-                        >
-                            <Input placeholder="请输入 bilibili 用户uid"/>
-                        </Form.Item>
-                        <Form.Item
-                            name="fid"
-                            rules={[{required: true}]}
-                            style={{display: 'inline-block', width: '50%', margin: '0 0 0 8px'}}
-                        >
-                            <Input placeholder="请输入收藏夹fid"/>
-                        </Form.Item>
+                        <Input placeholder="请输入收藏夹 URL"/>
                     </Form.Item>
-                    <Form.Item name="rss_domain" label="RSSHub 服务" rules={[{required: true}]}>
+                    <Form.Item name="rss_domain" label="RSSHub 服务" rules={[
+                        {
+                            required: true,
+                            message: '请输入 RssHub 服务地址'
+                        },
+                        {
+                            pattern: new RegExp('^(http|https):\\/\\/[^\\s/$.?#].[^\\s]*[^/]$'),
+                            message: '请输入符合的地址，注意不要以 / 结尾'
+                        }
+                    ]}>
                         <Input/>
                     </Form.Item>
                     <Form.Item name="cron" label="Cron 定时" rules={[{required: true}]}>

@@ -24,11 +24,16 @@ export default function handler(
 ) {
     if (req.method === 'POST') {
         jsonParser(req, res, function () {
+            const url = new URL(req.body['fav_url']);
+            const searchParams = url.searchParams;
+
+            const fid = searchParams.get('fid');
+            const uid = url.pathname.split('/')[1];
             const config = {
                 telegram_bot_token: req.body['telegram_bot_token'] || '',
                 telegram_chat_id: req.body['telegram_chat_id'] || '',
-                uid: req.body['uid'],
-                fid: req.body['fid'],
+                uid,
+                fid,
                 rss_domain: req.body['rss_domain'],
                 cron: req.body['cron'],
                 cookies: req.body['cookies'] || ''
