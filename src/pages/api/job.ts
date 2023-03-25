@@ -36,10 +36,8 @@ export default function handler(
                 fid,
                 rss_domain: req.body['rss_domain'],
                 cron: req.body['cron'],
-                cookies: req.body['cookies'] || ''
             }
             writeFileSync('/app/config.json', JSON.stringify(config, null, 2))
-            writeFileSync('/app/cookies.txt', config.cookies);
             if (!existsSync('/app/BV.txt')) {
                 writeFileSync('/app/BV.txt', '');
             }
