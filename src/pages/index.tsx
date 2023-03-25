@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
-import {Button, Form, Input, message} from 'antd';
+import {Button, Form, Input, message, Modal} from 'antd';
 import React, {useEffect, useState} from 'react';
 import {EasterEgg} from '@/const';
 
@@ -20,6 +20,8 @@ export default function Home() {
     const [messageApi, contextHolder] = message.useMessage();
     const [formData, setFormData] = useState({});
     const [nextInvocationTime, setInvocationTime] = useState('');
+    const [visible, setVisible] = useState(false); // 控制模态框的显示与隐藏
+    const [text, setText] = useState(''); // 保存 TextArea 中的文本内容
 
     useEffect(() => {
         // 从 API 获取数据
@@ -99,6 +101,46 @@ export default function Home() {
         }
     }
 
+    const showModal = () => {
+        setVisible(true);
+    };
+
+    const handleOk = async () => {
+        try {
+            const response = await fetch('/api/config', {
+                method: 'POST',
+                body: JSON.stringify({cookies: text}),
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                }
+            });
+            if (!response.ok) {
+                throw Error(response.statusText)
+            }
+            const data = await response.json();
+            messageApi.open({
+                type: 'success',
+                content: data.msg,
+            });
+        } catch (error) {
+            messageApi.open({
+                type: 'error',
+                content: `${error}`,
+            });
+            console.error(error);
+        } finally {
+            setVisible(false);
+        }
+    };
+
+    const handleCancel = () => {
+        setVisible(false);
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setText(e.target.value);
+    };
+
     return (
         <>
             {contextHolder}
@@ -109,6 +151,22 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             <main className={styles.main}>
+                <Modal
+                    open={visible}
+                    mask={true}
+                    closable={false}
+                    footer={[
+                        <Button key="back" onClick={handleCancel}>
+                            取消
+                        </Button>,
+                        <Button key="submit" type="primary" onClick={handleOk} disabled={!text.trim()}>
+                            确认
+                        </Button>,
+                    ]}
+                >
+                    <TextArea rows={8} onChange={handleChange}
+                              placeholder="针对会员用户可以下载最高清晰度的视频，数据仅在本地，请放心使用～"/>
+                </Modal>
                 <Form
                     {...layout}
                     form={form}
@@ -166,9 +224,16 @@ export default function Home() {
                     <Form.Item name="cron" label="Cron 定时" rules={[{required: true}]}>
                         <Input/>
                     </Form.Item>
-                    <Form.Item name="cookies" label="Cookies">
-                        <TextArea rows={8} style={{resize: 'none'}}
-                                  placeholder="针对会员用户可以下载最高清晰度的视频，数据仅在本地，请放心使用～"/>
+                    <Form.Item label="Cookies">
+                        <Input
+                            style={{ cursor: 'pointer' }}
+                            onClick={showModal}
+                            readOnly
+                            placeholder="点击输入 cookies 值"
+                        />
+                    </Form.Item>
+                    <Form.Item label="下次执行时间">
+                        <span>{nextInvocationTime ? new Date(nextInvocationTime).toLocaleString() : '暂未有任务运行中'}</span>
                     </Form.Item>
                     <Form.Item {...tailLayout} className={styles.buttons}>
                         <Button type="primary" htmlType="submit">
@@ -177,9 +242,6 @@ export default function Home() {
                         <Button htmlType="button" onClick={onTerminate} className={styles.reset} disabled={!nextInvocationTime}>
                             结束任务
                         </Button>
-                    </Form.Item>
-                    <Form.Item label="下次执行时间">
-                        <span>{nextInvocationTime ? new Date(nextInvocationTime).toLocaleString() : '暂未有任务运行中'}</span>
                     </Form.Item>
                 </Form>
             </main>
