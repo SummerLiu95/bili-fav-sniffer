@@ -7,12 +7,11 @@ import {EasterEgg} from '@/const';
 const {TextArea} = Input;
 
 const layout = {
-    labelCol: {span: 5},
-    wrapperCol: {span: 16},
+    labelCol: {span: 6},
 };
 
 const tailLayout = {
-    wrapperCol: {offset: 5, span: 16},
+    wrapperCol: {offset: 6, span: 16},
 };
 
 export default function Home() {
@@ -171,83 +170,85 @@ export default function Home() {
                     <TextArea rows={8} onChange={handleChange}
                               placeholder="针对会员用户可以下载最高清晰度的视频，数据仅在本地，请放心使用～"/>
                 </Modal>
-                <Form
-                    {...layout}
-                    form={form}
-                    name="control-hooks"
-                    initialValues={{rss_domain: 'https://rsshub.app', cron: '0 10,19 * * *'}}
-                    onFinish={onSubmit}
-                    className={styles.form}
-                >
-                    <Form.Item
-                        label="TG 推送"
-                        style={{marginBottom: 0}}
-                        tooltip={<span>查阅<a target="_blank" style={{textDecoration: "underline"}} href="https://hellodk.cn/post/743">Telegram 创建 bot 获取 token 和 chatID 以及发送消息简明教程</a></span>}
+                <div className={styles.container}>
+                    <Form
+                        {...layout}
+                        form={form}
+                        name="control-hooks"
+                        initialValues={{rss_domain: 'https://rsshub.app', cron: '0 10,19 * * *'}}
+                        onFinish={onSubmit}
+                        className={styles.form}
                     >
                         <Form.Item
-                            name="telegram_bot_token"
-                            style={{display: 'inline-block', width: 'calc(50% - 8px)'}}
+                            label="TG 推送"
+                            style={{marginBottom: 0}}
+                            tooltip={<span>查阅<a target="_blank" style={{textDecoration: "underline"}} href="https://hellodk.cn/post/743">Telegram 创建 bot 获取 token 和 chatID 以及发送消息简明教程</a></span>}
                         >
-                            <Input placeholder="请输入 TG token"/>
+                            <Form.Item
+                                name="telegram_bot_token"
+                                style={{display: 'inline-block', width: 'calc(50% - 8px)'}}
+                            >
+                                <Input placeholder="请输入 TG token"/>
+                            </Form.Item>
+                            <Form.Item
+                                name="telegram_chat_id"
+                                style={{display: 'inline-block', width: '50%', margin: '0 0 0 8px'}}
+                            >
+                                <Input placeholder="请输入 TG chat id"/>
+                            </Form.Item>
                         </Form.Item>
                         <Form.Item
-                            name="telegram_chat_id"
-                            style={{display: 'inline-block', width: '50%', margin: '0 0 0 8px'}}
-                        >
-                            <Input placeholder="请输入 TG chat id"/>
+                            label="收藏夹"
+                            name="fav_url"
+                            rules={[
+                                {   required: true,
+                                    message: '请输入收藏夹链接'
+                                },
+                                {
+                                    pattern: new RegExp('^https?:\\/\\/space\\.bilibili\\.com\\/.+?\\/favlist\\?fid=.+?$'),
+                                    message: '请输入正确的收藏夹地址'
+                                }
+                            ]}
+                            tooltip={<span>查阅<a target="_blank" style={{textDecoration: "underline"}}
+                                                  href="https://docs.rsshub.app/social-media.html#bilibili-up-zhu-fei-mo-ren-shou-cang-jia">社交媒体-bilibili up主非默认收藏夹｜RSSHub</a></span>}>
+                            <Input placeholder="请输入收藏夹 URL"/>
                         </Form.Item>
-                    </Form.Item>
-                    <Form.Item
-                        label="收藏夹"
-                        name="fav_url"
-                        rules={[
-                            {   required: true,
-                                message: '请输入收藏夹链接'
+                        <Form.Item name="rss_domain" label="RSSHub 服务" rules={[
+                            {
+                                required: true,
+                                message: '请输入 RssHub 服务地址'
                             },
                             {
-                                pattern: new RegExp('^https?:\\/\\/space\\.bilibili\\.com\\/.+?\\/favlist\\?fid=.+?$'),
-                                message: '请输入正确的收藏夹地址'
+                                pattern: new RegExp('^(http|https):\\/\\/[^\\s/$.?#].[^\\s]*[^/]$'),
+                                message: '请输入符合的地址，注意不要以 / 结尾'
                             }
-                        ]}
-                        tooltip={<span>查阅<a target="_blank" style={{textDecoration: "underline"}}
-                                              href="https://docs.rsshub.app/social-media.html#bilibili-up-zhu-fei-mo-ren-shou-cang-jia">社交媒体-bilibili up主非默认收藏夹｜RSSHub</a></span>}>
-                        <Input placeholder="请输入收藏夹 URL"/>
-                    </Form.Item>
-                    <Form.Item name="rss_domain" label="RSSHub 服务" rules={[
-                        {
-                            required: true,
-                            message: '请输入 RssHub 服务地址'
-                        },
-                        {
-                            pattern: new RegExp('^(http|https):\\/\\/[^\\s/$.?#].[^\\s]*[^/]$'),
-                            message: '请输入符合的地址，注意不要以 / 结尾'
-                        }
-                    ]}>
-                        <Input/>
-                    </Form.Item>
-                    <Form.Item name="cron" label="Cron 定时" rules={[{required: true}]}>
-                        <Input/>
-                    </Form.Item>
-                    <Form.Item label="Cookies">
-                        <Input
-                            style={{ cursor: 'pointer' }}
-                            onClick={showModal}
-                            readOnly
-                            placeholder="点击输入 cookies 值"
-                        />
-                    </Form.Item>
-                    <Form.Item label="下次执行时间">
-                        <span>{nextInvocationTime ? new Date(nextInvocationTime).toLocaleString() : '暂未有任务运行中'}</span>
-                    </Form.Item>
-                    <Form.Item {...tailLayout} className={styles.buttons}>
-                        <Button type="primary" htmlType="submit">
-                            开启/更新任务
-                        </Button>
-                        <Button htmlType="button" onClick={onTerminate} className={styles.reset} disabled={!nextInvocationTime}>
-                            结束任务
-                        </Button>
-                    </Form.Item>
-                </Form>
+                        ]}>
+                            <Input/>
+                        </Form.Item>
+                        <Form.Item name="cron" label="Cron 定时" rules={[{required: true}]}>
+                            <Input/>
+                        </Form.Item>
+                        <Form.Item label="Cookies">
+                            <Input
+                                style={{ cursor: 'pointer' }}
+                                onClick={showModal}
+                                readOnly
+                                placeholder="点击输入 cookies 值"
+                            />
+                        </Form.Item>
+                        <Form.Item label="下次执行时间">
+                            <span>{nextInvocationTime ? new Date(nextInvocationTime).toLocaleString() : '暂未有任务运行中'}</span>
+                        </Form.Item>
+                        <Form.Item {...tailLayout} className={styles.buttons}>
+                            <Button type="primary" htmlType="submit">
+                                开启/更新任务
+                            </Button>
+                            <Button htmlType="button" onClick={onTerminate} className={styles.reset} disabled={!nextInvocationTime}>
+                                结束任务
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                </div>
             </main>
         </>
     )

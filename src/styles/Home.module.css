@@ -1,13 +1,20 @@
-.main {
+.main{
+  height: 100vh;
+  position: relative;
+}
+.container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  margin: 12rem 26rem;
-  height: calc(100vh - 24rem);
   background-color: white;
   box-shadow: 10px 8px 8px #0000000f;
   border-radius: 2rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .reset {
@@ -15,10 +22,8 @@
 }
 
 .form {
-  width: 46%;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  margin: 50px 0;
+  width: 70%;
 }
 
 .buttons {
