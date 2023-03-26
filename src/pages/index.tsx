@@ -19,8 +19,10 @@ export default function Home() {
     const [messageApi, contextHolder] = message.useMessage();
     const [formData, setFormData] = useState({});
     const [nextInvocationTime, setInvocationTime] = useState('');
-    const [visible, setVisible] = useState(false); // 控制模态框的显示与隐藏
-    const [text, setText] = useState(''); // 保存 TextArea 中的文本内容
+    const [cookiesVisible, setCookiesVisible] = useState(false); // 控制模态框的显示与隐藏
+    const [logVisible, setLogVisible] = useState(false); // 控制模态框的显示与隐藏
+    const [cookiesText, setCookiesText] = useState(''); // 保存 TextArea 中的文本内容
+    const [runningLog, setRunningLog] = useState(''); // 保存 TextArea 中的文本内容
 
     useEffect(() => {
         // 从 API 获取数据
@@ -105,14 +107,17 @@ export default function Home() {
     }
 
     const showModal = () => {
-        setVisible(true);
+        setCookiesVisible(true);
     };
 
+    const showLog = () => {
+        setLogVisible(true);
+    }
     const handleOk = async () => {
         try {
             const response = await fetch('/api/config', {
                 method: 'POST',
-                body: JSON.stringify({cookies: text}),
+                body: JSON.stringify({cookies: cookiesText}),
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8'
                 }
@@ -132,17 +137,39 @@ export default function Home() {
             });
             console.error(error);
         } finally {
-            setVisible(false);
+            setCookiesVisible(false);
         }
     };
 
     const handleCancel = () => {
-        setVisible(false);
+        setCookiesVisible(false);
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setText(e.target.value);
+    const handleCookiesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setCookiesText(e.target.value);
     };
+
+    const onCallOnce = async () => {
+        try {
+            const response = await fetch('/api/job', {
+                method: 'PUT'
+            });
+            if (!response.ok) {
+                throw Error(response.statusText)
+            }
+            const data = await response.json();
+            messageApi.open({
+                type: 'success',
+                content: data.msg,
+            });
+        } catch (error) {
+            messageApi.open({
+                type: 'error',
+                content: `${error}`,
+            });
+            console.error(error);
+        }
+    }
 
     return (
         <>
@@ -155,20 +182,31 @@ export default function Home() {
             </Head>
             <main className={styles.main}>
                 <Modal
-                    open={visible}
+                    open={cookiesVisible}
                     mask={true}
                     closable={false}
                     footer={[
                         <Button key="back" onClick={handleCancel}>
                             取消
                         </Button>,
-                        <Button key="submit" type="primary" onClick={handleOk} disabled={!text.trim()}>
+                        <Button key="submit" type="primary" onClick={handleOk} disabled={!cookiesText.trim()}>
                             确认
                         </Button>,
                     ]}
                 >
-                    <TextArea rows={8} onChange={handleChange}
+                    <TextArea rows={8} onChange={handleCookiesChange}
                               placeholder="针对会员用户可以下载最高清晰度的视频，数据仅在本地，请放心使用～"/>
+                </Modal>
+                <Modal
+                    open={logVisible}
+                    mask={true}
+                    closable={true}
+                    title="日志"
+                    centered
+                    width={1000}
+                    footer={null}
+                >
+                    <TextArea style={{backgroundColor: '#020202'}} rows={30} value={runningLog} readOnly/>
                 </Modal>
                 <div className={styles.container}>
                     <Form
@@ -241,10 +279,18 @@ export default function Home() {
                         </Form.Item>
                         <Form.Item {...tailLayout} className={styles.buttons}>
                             <Button type="primary" htmlType="submit">
-                                开启/更新任务
+                                {`${nextInvocationTime ? '更新' : '开启'}任务`}
                             </Button>
                             <Button htmlType="button" onClick={onTerminate} className={styles.reset} disabled={!nextInvocationTime}>
                                 结束任务
+                            </Button>
+                            <Button htmlType="button" onClick={onCallOnce} className={styles.reset} disabled={!nextInvocationTime}>
+                                手动执行
+                            </Button>
+                        </Form.Item>
+                        <Form.Item {...tailLayout} className={styles.buttons}>
+                            <Button type="link" onClick={showLog}>
+                                查看日志
                             </Button>
                         </Form.Item>
                     </Form>

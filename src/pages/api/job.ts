@@ -37,7 +37,8 @@ export default function handler(
                 rss_domain: req.body['rss_domain'],
                 cron: req.body['cron'],
             }
-            writeFileSync('/app/config.json', JSON.stringify(config, null, 2))
+            writeFileSync('/app/config.json', JSON.stringify(config, null, 2));
+            writeFileSync('/app/cookies.txt', '');
             if (!existsSync('/app/BV.txt')) {
                 writeFileSync('/app/BV.txt', '');
             }
@@ -88,6 +89,16 @@ export default function handler(
                 msg: '未有在运行的任务，因此获取下次执行时间失败',
                 data: {nextInvocationTime: ''}
             })
+        }
+    } else if (req.method === 'PUT') {
+        try {
+            job.invoke();
+            res.status(200).json({
+                msg: '手动执行任务成功'
+            })
+        } catch (e) {
+            res.statusMessage = '手动执行任务失败';
+            res.status(500).end();
         }
     }
 }
