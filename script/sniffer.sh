@@ -96,6 +96,13 @@ for(( i=${#infoArray[@]} - 1;i >= 0;i--)) do
     else
         $you --debug --playlist -o "$folderName" "$link"
     fi
+    for file in "$folderName"/*; do
+      if [ "${file##*.}" = "xml" ]; then
+        "$dirLocation"/DanmakuFactory/DanmakuFactory -o "${file%%.cmt.xml*}".ass -i "$file" -D 0
+        #删除源文件
+        rm "$file"
+      fi
+    done
     isDownloadedVideo=0
     for file in "$folderName"/*; do
       if [ "${file##*.}" = "mp4" ] || [ "${file##*.}" = "flv" ] || [ "${file##*.}" = "mkv" ]; then
