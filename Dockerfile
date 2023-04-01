@@ -36,15 +36,19 @@ RUN yarn build
 FROM base AS runner
 WORKDIR /app
 
-RUN chmod -R 777 /app && \
-    apk update && \
+RUN apk update && \
     apk upgrade && \
-    apk add --no-cache curl bash jq ffmpeg tzdata py3-configobj py3-pip py3-setuptools python3 python3-dev vim && \
+    apk add --no-cache curl bash jq ffmpeg tzdata py3-configobj py3-pip py3-setuptools python3 python3-dev gcc g++ make git && \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     echo "Shanghai/Asia" > /etc/timezone && \
     rm -rf /var/cache/apk/* && \
     /bin/bash && \
-    python3 -m pip install you-get
+    python3 -m pip install you-get && \
+    git clone https://github.com/hihkm/DanmakuFactory.git && \
+    cd DanmakuFactory && \
+    mkdir temp && \
+    make && \
+    mkdir /usr/you-get-download
 
 ENV NODE_ENV production
 # Uncomment the following line in case you want to disable telemetry during runtime.
@@ -69,6 +73,5 @@ EXPOSE 3000
 
 ENV PORT 3000
 
-CMD ["mkdir", "/usr/you-get-download"]
 CMD ["node", "server.js"]
 
