@@ -31,7 +31,7 @@ docker run \
 ## DockerHub 镜像地址
 [fish95/bili-fav-sniffer](https://hub.docker.com/r/fish95/bili-fav-sniffer)
 
-## To-Do
+## To-Do(更新中，待 to-do 事项完成后发布正式版本)
 - [x] 配置文件
 - [x] 多个新收藏视频下载
 - [x] 修复视频下载是否成功得判断逻辑
@@ -46,9 +46,7 @@ docker run \
 - [x] 将收藏夹uid fid输入框更改为收藏夹 url 地址
 - [x] RSSHub URL 校验
 - [x] 变更 cookies 的输入交互
-- [ ] 增加控制台输出页面
-- [ ] 对 xml 弹幕转换成 srt
-- [ ] 推送消息方式的增加和选择
+- [x] 对 xml 弹幕转换成 srt
 - [ ] 增加配置文件的导入导出，避免每次都需要手动填写
 - [ ] 增加配置的有效性测试
 - [ ] cron 易用性问题
@@ -57,6 +55,8 @@ docker run \
 ## Roadmap
 - [ ] 考虑用户扫码登入bili账号下载会员清晰度视频
 - [ ] 考虑接入bili官方收藏夹接口替换 RssHub
+- [ ] 推送消息方式的增加和选择
+- [ ] 增加历史日志查询页面
 
 ## 使用须知
 
