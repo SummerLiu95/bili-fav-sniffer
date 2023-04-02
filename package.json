@@ -16,6 +16,7 @@
     "body-parser": "^1.20.2",
     "eslint": "8.35.0",
     "eslint-config-next": "13.2.1",
+    "formidable": "^2.1.1",
     "next": "13.2.1",
     "node-schedule": "^2.1.1",
     "react": "18.2.0",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.2",
+    "@types/formidable": "^2.0.5",
     "@types/node-schedule": "^2.1.0"
   }
 }

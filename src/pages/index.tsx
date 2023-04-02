@@ -1,8 +1,9 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
-import {Button, Form, Input, message, Modal} from 'antd';
+import { Button, Form, Input, message, Modal, Upload } from 'antd';
 import React, {useEffect, useState} from 'react';
 import {EasterEgg} from '@/const';
+import type { UploadProps } from 'antd';
 
 const {TextArea} = Input;
 
@@ -171,6 +172,38 @@ export default function Home() {
         }
     }
 
+    const props: UploadProps = {
+        name: 'file',
+        action: '/api/upload',
+        accept: ".json",
+        showUploadList: false,
+        onChange(info) {
+            if (info.file.status !== 'uploading') {
+                console.log(info.file, info.fileList);
+            }
+            if (info.file.status === 'done') {
+                message.success(`${info.file.name} 文件成功上传`);
+                setFormData((info.file.response as any).data);
+            } else if (info.file.status === 'error') {
+                message.error(`${info.file.name} 文件上传失败`);
+            }
+        },
+    };
+
+    const exportConfig = async () => {
+        try {
+            const res = await fetch('/api/export')
+            const blob = await res.blob()
+            const url = URL.createObjectURL(blob)
+            const link = document.createElement('a')
+            link.href = url
+            link.download = 'config.json' // 设置下载文件名
+            link.click()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <>
             {contextHolder}
@@ -287,12 +320,18 @@ export default function Home() {
                             <Button htmlType="button" onClick={onCallOnce} className={styles.reset} disabled={!nextInvocationTime}>
                                 手动执行
                             </Button>
+                            <Upload {...props} >
+                                <Button className={styles.reset}>导入配置</Button>
+                            </Upload>
+                            <Button onClick={exportConfig} className={styles.reset} disabled={!nextInvocationTime}>
+                                导出配置
+                            </Button>
                         </Form.Item>
-                        <Form.Item {...tailLayout} className={styles.buttons}>
+                        {/* <Form.Item {...tailLayout} className={styles.buttons}>
                             <Button type="link" onClick={showLog}>
                                 查看日志
                             </Button>
-                        </Form.Item>
+                        </Form.Item> */}
                     </Form>
                 </div>
             </main>
