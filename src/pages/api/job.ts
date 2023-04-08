@@ -16,6 +16,10 @@ let job = new Job('sniffer shell', function () {
 
     //将子进程的标准错误流附加到父进程的流中
     child.stderr.pipe(process.stderr);
+
+    child.on('close', (code) => {
+        console.info(`script execution process exited with code ${code}`);
+    });
 });
 
 export default function handler(

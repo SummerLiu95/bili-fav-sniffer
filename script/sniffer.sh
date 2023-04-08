@@ -10,10 +10,10 @@ telegram_chat_id=$(jq -c -r .telegram_chat_id "$dirLocation"/config.json)
 uid=$(jq -c -r .uid "$dirLocation"/config.json)
 fid=$(jq -c -r .fid "$dirLocation"/config.json)
 rss_domain=$(jq -c -r .rss_domain "$dirLocation"/config.json)
-cookies=$(jq -c -r .cookies "$dirLocation"/config.json)
 videoLocation="/usr/you-get-download/"
 cookies_location="$dirLocation"/cookies.txt
 bv_location="$dirLocation"/BV.txt
+cookies=$(cat "$cookies_location")
 
 favURL="https://space.bilibili.com/$uid/favlist?fid=$fid"
 rssURL="$rss_domain/bilibili/fav/$uid/$fid/1"
@@ -32,7 +32,7 @@ content=$(wget "$rssURL" -q -O -)
 favTitleSuffix=${content%%<atom:link*}
 temp=${favTitleSuffix#*\[CDATA\[}
 favTitle=${temp%%\]\]>*}
-echo "favTitle: $favTitle"
+echo "favorites title: $favTitle"
 
 #Cookies可用性检查
 if [ "$cookies" != "" ]; then
@@ -74,15 +74,14 @@ for(( i=${#infoArray[@]} - 1;i >= 0;i--)) do
     titleSuffix=${item#*\[CDATA\[}
     tempVideoTitle=${titleSuffix%%\]\]>*}
     videoTitle=${tempVideoTitle//\//|}
-    echo "videoTitle: $videoTitle"
+    echo "video title: $videoTitle"
     #此处为视频存储位置，自行修改
     folderName="$videoLocation$videoTitle"
     #获得封面图下载链接和文件名称
     subContent=${item#*<img src=\"}
     photoLink=${subContent%%\"*}
     pName=${photoLink#*archive/}
-    echo "photoLink: $photoLink"
-    echo "pName: $pName"
+    echo "poster link: $photoLink"
     #下载封面图（图片存储位置应和视频一致）
     pNameCompareRes=$(echo "$pName" | grep "jpg")
     mkdir "$folderName"
