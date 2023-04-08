@@ -95,6 +95,15 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+.ant-input-suffix {
+  position: relative;
+  left: 40px;
+}
+
+.ant-input-affix-wrapper-status-error {
+  border-color: #d9d9d9 !important;
+}
+
 a {
   color: inherit;
   text-decoration: none;

@@ -2,7 +2,7 @@ import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
 import { Button, Form, Input, message, Modal, Upload } from 'antd';
 import React, {useEffect, useState} from 'react';
-import {EasterEgg} from '@/const';
+import {ConnectionType, EasterEgg} from '@/const';
 import type { UploadProps } from 'antd';
 
 const {TextArea} = Input;
@@ -17,13 +17,14 @@ const tailLayout = {
 
 export default function Home() {
     const [form] = Form.useForm();
-    const [messageApi, contextHolder] = message.useMessage();
     const [formData, setFormData] = useState({});
     const [nextInvocationTime, setInvocationTime] = useState('');
     const [cookiesVisible, setCookiesVisible] = useState(false); // 控制模态框的显示与隐藏
     const [logVisible, setLogVisible] = useState(false); // 控制模态框的显示与隐藏
     const [cookiesText, setCookiesText] = useState(''); // 保存 TextArea 中的文本内容
     const [runningLog, setRunningLog] = useState(''); // 保存 TextArea 中的文本内容
+    const [validateChatIDStatus, setValidateChatIDStatus] = useState('');
+    const [validateRSSStatus, setValidateRSSStatus] = useState('');
 
     useEffect(() => {
         // 从 API 获取数据
@@ -71,15 +72,9 @@ export default function Home() {
             }
             const data = await response.json();
             setInvocationTime(data.data.nextInvocationTime);
-            messageApi.open({
-                type: 'success',
-                content: data.msg,
-            });
+            message.success(data.msg);
         } catch (error) {
-            messageApi.open({
-                type: 'error',
-                content: `${error}`,
-            });
+            message.error(`${error}`);
             console.error(error);
         }
     };
@@ -94,15 +89,9 @@ export default function Home() {
             }
             const data = await response.json();
             setInvocationTime(data.data.nextInvocationTime);
-            messageApi.open({
-                type: 'success',
-                content: data.msg,
-            });
+            message.success(data.msg);
         } catch (error) {
-            messageApi.open({
-                type: 'error',
-                content: `${error}`,
-            });
+            message.error(`${error}`);
             console.error(error);
         }
     }
@@ -127,15 +116,9 @@ export default function Home() {
                 throw Error(response.statusText)
             }
             const data = await response.json();
-            messageApi.open({
-                type: 'success',
-                content: data.msg,
-            });
+            message.success(data.msg);
         } catch (error) {
-            messageApi.open({
-                type: 'error',
-                content: `${error}`,
-            });
+            message.error(`${error}`);
             console.error(error);
         } finally {
             setCookiesVisible(false);
@@ -159,15 +142,9 @@ export default function Home() {
                 throw Error(response.statusText)
             }
             const data = await response.json();
-            messageApi.open({
-                type: 'success',
-                content: data.msg,
-            });
+            message.success(data.msg);
         } catch (error) {
-            messageApi.open({
-                type: 'error',
-                content: `${error}`,
-            });
+            message.error(`${error}`);
             console.error(error);
         }
     }
@@ -200,13 +177,68 @@ export default function Home() {
             link.download = 'config.json' // 设置下载文件名
             link.click()
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
+    const handleChatIDBlur = async (event: React.FocusEvent<HTMLInputElement>) => {
+        const telegram_bot_token = form.getFieldValue('telegram_bot_token');
+        if (!telegram_bot_token || !event.target.value) {
+            return;
+        }
+        setValidateChatIDStatus('validating');
+        try {
+            const response = await fetch(`/api/connection`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    type: ConnectionType.Tele,
+                    telegram_bot_token,
+                    telegram_chat_id: event.target.value,
+                }),
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                }
+            });
+            if (response.ok) {
+                setValidateChatIDStatus('success');// 在这里处理测试成功的逻辑
+            } else {
+                throw new Error(response.statusText)
+            }
+        } catch (e) {
+            console.error(e);
+            setValidateChatIDStatus('error');
+        }
+    };
+
+    const handleRSSDomainBlur = async (event: React.FocusEvent<HTMLInputElement>) => {
+        if (!event.target.value) {
+            return;
+        }
+        setValidateRSSStatus('validating');
+        try {
+            const resp = await fetch('/api/connection', {
+                method: 'POST',
+                body: JSON.stringify({
+                    type: ConnectionType.RSS,
+                    url: event.target.value,
+                }),
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                }
+            });
+            if (resp.ok) {
+                setValidateRSSStatus('success');
+            } else {
+                throw new Error(resp.statusText);
+            }
+        } catch (e) {
+            setValidateRSSStatus('error');
+            console.error(e);
+        }
+    };
+
     return (
         <>
-            {contextHolder}
             <Head>
                 <title>bili-fav-sniffer 配置</title>
                 <meta name="description" content="Generated by create next app"/>
@@ -264,8 +296,10 @@ export default function Home() {
                             <Form.Item
                                 name="telegram_chat_id"
                                 style={{display: 'inline-block', width: '50%', margin: '0 0 0 8px'}}
+                                hasFeedback
+                                validateStatus={validateChatIDStatus as ""}
                             >
-                                <Input placeholder="请输入 TG chat id"/>
+                                <Input placeholder="请输入 TG chat id" onBlur={handleChatIDBlur}/>
                             </Form.Item>
                         </Form.Item>
                         <Form.Item
@@ -284,17 +318,22 @@ export default function Home() {
                                                   href="https://docs.rsshub.app/social-media.html#bilibili-up-zhu-fei-mo-ren-shou-cang-jia">社交媒体-bilibili up主非默认收藏夹｜RSSHub</a></span>}>
                             <Input placeholder="请输入收藏夹 URL"/>
                         </Form.Item>
-                        <Form.Item name="rss_domain" label="RSSHub 服务" rules={[
-                            {
-                                required: true,
-                                message: '请输入 RssHub 服务地址'
-                            },
-                            {
-                                pattern: new RegExp('^(http|https):\\/\\/[^\\s/$.?#].[^\\s]*[^/]$'),
-                                message: '请输入符合的地址，注意不要以 / 结尾'
-                            }
-                        ]}>
-                            <Input/>
+                        <Form.Item
+                            name="rss_domain"
+                            label="RSSHub 服务"
+                            hasFeedback
+                            validateStatus={validateRSSStatus as ""}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '请输入 RssHub 服务地址'
+                                },
+                                {
+                                    pattern: new RegExp('^(http|https):\\/\\/[^\\s/$.?#].[^\\s]*[^/]$'),
+                                    message: '请输入符合的地址，注意不要以 / 结尾'
+                                }
+                            ]}>
+                            <Input onBlur={handleRSSDomainBlur}/>
                         </Form.Item>
                         <Form.Item name="cron" label="Cron 定时" rules={[{required: true}]}>
                             <Input/>
