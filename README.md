@@ -48,7 +48,7 @@ docker run \
 - [x] 变更 cookies 的输入交互
 - [x] 对 xml 弹幕转换成 srt
 - [x] 增加配置文件的导入导出，避免每次都需要手动填写
-- [ ] 增加配置的有效性测试
+- [x] 增加配置的有效性测试
 - [ ] cron 易用性问题
 - [ ] 解决潜在的用户权限问题
 
@@ -101,7 +101,8 @@ docker run -it --rm -p 3000:3000 -v ${specifiedVideoDownloadDir}:/usr/you-get-do
 [Left024/BiliFavoritesDownloader](https://github.com/Left024/BiliFavoritesDownloader)\
 [you-get](https://github.com/soimort/you-get)\
 [FFmpeg](https://github.com/FFmpeg/FFmpeg)\
-[RSSHub](https://github.com/DIYgod/RSSHub)
+[RSSHub](https://github.com/DIYgod/RSSHub)\
+[hihkm/DanmakuFactory](https://github.com/hihkm/DanmakuFactory)
 
 ## P.S.
 本项目中一些代码由 ChatGPT 输出，感谢 ChatGPT 哈哈哈哈。我只是个代码黏合怪哈哈哈哈哈～
