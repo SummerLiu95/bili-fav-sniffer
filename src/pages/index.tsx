@@ -1,9 +1,10 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
-import { Button, Form, Input, message, Modal, Upload } from 'antd';
+import {Button, Form, Input, message, Modal, Upload, Popover, Drawer} from 'antd';
 import React, {useEffect, useState} from 'react';
 import {ConnectionType, EasterEgg} from '@/const';
-import type { UploadProps } from 'antd';
+import type {UploadProps} from 'antd';
+import {SettingOutlined} from '@ant-design/icons';
 
 const {TextArea} = Input;
 
@@ -25,6 +26,15 @@ export default function Home() {
     const [runningLog, setRunningLog] = useState(''); // 保存 TextArea 中的文本内容
     const [validateChatIDStatus, setValidateChatIDStatus] = useState('');
     const [validateRSSStatus, setValidateRSSStatus] = useState('');
+    const [open, setOpen] = useState(false);
+
+    const showDrawer = () => {
+        setOpen(true);
+    };
+
+    const onClose = () => {
+        setOpen(false);
+    };
 
     useEffect(() => {
         // 从 API 获取数据
@@ -246,6 +256,24 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             <main className={styles.main}>
+                <Popover placement="leftTop" content={'配置管理'}>
+                    <Button
+                        className={styles.setting}
+                        type="text"
+                        ghost
+                        icon={<SettingOutlined style={{fontSize: '16px'}}/>}
+                        onClick={showDrawer}
+
+                    />
+                </Popover>
+                <Drawer title="配置管理" placement="right" onClose={onClose} open={open}>
+                    <Upload {...props} >
+                        <Button className={styles.reset}>导入配置</Button>
+                    </Upload>
+                    <Button onClick={exportConfig} className={styles.reset} disabled={!nextInvocationTime}>
+                        导出配置
+                    </Button>
+                </Drawer>
                 <Modal
                     open={cookiesVisible}
                     mask={true}
@@ -285,7 +313,8 @@ export default function Home() {
                         <Form.Item
                             label="TG 推送"
                             style={{marginBottom: 0}}
-                            tooltip={<span>查阅<a target="_blank" style={{textDecoration: "underline"}} href="https://hellodk.cn/post/743">Telegram 创建 bot 获取 token 和 chatID 以及发送消息简明教程</a></span>}
+                            tooltip={<span>查阅<a target="_blank" style={{textDecoration: "underline"}}
+                                                  href="https://hellodk.cn/post/743">Telegram 创建 bot 获取 token 和 chatID 以及发送消息简明教程</a></span>}
                         >
                             <Form.Item
                                 name="telegram_bot_token"
@@ -306,7 +335,8 @@ export default function Home() {
                             label="收藏夹"
                             name="fav_url"
                             rules={[
-                                {   required: true,
+                                {
+                                    required: true,
                                     message: '请输入收藏夹链接'
                                 },
                                 {
@@ -340,7 +370,7 @@ export default function Home() {
                         </Form.Item>
                         <Form.Item label="Cookies">
                             <Input
-                                style={{ cursor: 'pointer' }}
+                                style={{cursor: 'pointer'}}
                                 onClick={showModal}
                                 readOnly
                                 placeholder="点击输入 cookies 值"
@@ -353,17 +383,13 @@ export default function Home() {
                             <Button type="primary" htmlType="submit">
                                 {`${nextInvocationTime ? '更新' : '开启'}任务`}
                             </Button>
-                            <Button htmlType="button" onClick={onTerminate} className={styles.reset} disabled={!nextInvocationTime}>
+                            <Button htmlType="button" onClick={onTerminate} className={styles.reset}
+                                    disabled={!nextInvocationTime}>
                                 结束任务
                             </Button>
-                            <Button htmlType="button" onClick={onCallOnce} className={styles.reset} disabled={!nextInvocationTime}>
+                            <Button htmlType="button" onClick={onCallOnce} className={styles.reset}
+                                    disabled={!nextInvocationTime}>
                                 手动执行
-                            </Button>
-                            <Upload {...props} >
-                                <Button className={styles.reset}>导入配置</Button>
-                            </Upload>
-                            <Button onClick={exportConfig} className={styles.reset} disabled={!nextInvocationTime}>
-                                导出配置
                             </Button>
                         </Form.Item>
                         {/* <Form.Item {...tailLayout} className={styles.buttons}>
