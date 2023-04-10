@@ -97,7 +97,7 @@ for(( i=${#infoArray[@]} - 1;i >= 0;i--)) do
     fi
     for file in "$folderName"/*; do
       if [ "${file##*.}" = "xml" ]; then
-        "$dirLocation"/DanmakuFactory/DanmakuFactory -o "${file%%.cmt.xml*}".ass -i "$file" -D 0
+        "$dirLocation"/DanmakuFactory-1.63/DanmakuFactory -o "${file%%.cmt.xml*}".ass -i "$file" -D 0
         #删除源文件
         rm "$file"
       fi
