@@ -5,6 +5,7 @@ import {existsSync, writeFileSync} from 'node:fs'
 import {Job} from 'node-schedule';
 import {Data} from '@/const';
 import bodyParser from 'body-parser';
+import fetch from 'node-fetch';
 
 const jsonParser = bodyParser.json();
 
@@ -27,12 +28,19 @@ export default function handler(
     res: NextApiResponse<Data>
 ) {
     if (req.method === 'POST') {
-        jsonParser(req, res, function () {
+        jsonParser(req, res, async function () {
             const url = new URL(req.body['fav_url']);
             const searchParams = url.searchParams;
-
+            let title = '';
             const fid = searchParams.get('fid');
             const uid = url.pathname.split('/')[1];
+            const response = await fetch(`https://api.bilibili.com/x/v3/fav/folder/info?media_id=${fid}`);
+            if (response.ok) {
+                const data = await response.json() as {data: {title: string; upper: {name: string}}};
+                title = `${data.data.title} - ${data.data.upper.name}`
+            } else {
+                title = 'bili-fav-sniffer'
+            }
             const config = {
                 telegram_bot_token: req.body['telegram_bot_token'] || '',
                 telegram_chat_id: req.body['telegram_chat_id'] || '',
@@ -40,6 +48,7 @@ export default function handler(
                 fid,
                 rss_domain: req.body['rss_domain'],
                 cron: req.body['cron'],
+                title,
             }
             writeFileSync('/app/config.json', JSON.stringify(config, null, 2));
             writeFileSync('/app/cookies.txt', '');
