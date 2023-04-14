@@ -332,7 +332,7 @@ export default function Home() {
                             </Form.Item>
                         </Form.Item>
                         <Form.Item
-                            label="收藏夹"
+                            label="收藏夹 URL"
                             name="fav_url"
                             rules={[
                                 {
@@ -344,9 +344,8 @@ export default function Home() {
                                     message: '请输入正确的收藏夹地址'
                                 }
                             ]}
-                            tooltip={<span>查阅<a target="_blank" style={{textDecoration: "underline"}}
-                                                  href="https://docs.rsshub.app/social-media.html#bilibili-up-zhu-fei-mo-ren-shou-cang-jia">社交媒体-bilibili up主非默认收藏夹｜RSSHub</a></span>}>
-                            <Input placeholder="请输入收藏夹 URL"/>
+                            >
+                            <Input placeholder="例如 https://space.bilibili.com/31386575/favlist?fid=2006220975&ftype=create"/>
                         </Form.Item>
                         <Form.Item
                             name="rss_domain"
@@ -365,7 +364,13 @@ export default function Home() {
                             ]}>
                             <Input onBlur={handleRSSDomainBlur}/>
                         </Form.Item>
-                        <Form.Item name="cron" label="Cron 定时" rules={[{required: true}]}>
+                        <Form.Item
+                            name="cron"
+                            label="Cron 定时"
+                            rules={[{required: true}]}
+                            tooltip={<span>查阅 <a target="_blank" style={{textDecoration: "underline"}}
+                                                href="https://crontab.guru/#0_10,19_*_*_*">Cron 表达式解析</a></span>}
+                        >
                             <Input/>
                         </Form.Item>
                         <Form.Item label="Cookies">
