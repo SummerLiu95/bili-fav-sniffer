@@ -25,7 +25,7 @@ COPY . .
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
-# ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN yarn build
 
@@ -66,8 +66,9 @@ RUN tar -zxvf DanmakuFactory-1.63.tar.gz && \
     mkdir temp && \
     make && \
     mkdir /usr/you-get-download && \
-    chown -R node:node /usr/you-get-download && \
-    chown -R node:node /app
+    chmod o+w /usr/you-get-download && \
+    chown -R node:node /app && \
+    chmod o-r /app
 
 COPY --from=builder --chown=node:node /app/public ./public
 COPY --chown=node:node /script/sniffer.sh /app/
