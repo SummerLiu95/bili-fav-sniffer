@@ -51,8 +51,8 @@ docker run \
 - [x] 增加配置的有效性测试
 - [x] cron 易用性问题
 - [x] 解决潜在的用户权限问题
-- [ ] 配置页面 title 读取容器名称
-- [ ] GitHub 流水线构建推送到 docker hub
+- [x] 页面 title 名称匹配收藏夹信息
+- [x] GitHub 流水线构建推送到 docker hub
 
 ## Roadmap
 - [ ] 考虑用户扫码登入bili账号下载会员清晰度视频
