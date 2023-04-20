@@ -50,9 +50,6 @@ ENV NODE_ENV production
 # Uncomment the following line in case you want to disable telemetry during runtime.
 ENV NEXT_TELEMETRY_DISABLED 1
 
-#RUN addgroup --system --gid 1001 nodejs
-#RUN adduser --system --uid 1001 nextjs
-
 # 设置时区变量
 ENV TIME_ZONE Asia/Shanghai
 # 设置 语言支持
@@ -65,20 +62,15 @@ RUN tar -zxvf DanmakuFactory-1.63.tar.gz && \
     cd DanmakuFactory-1.63 && \
     mkdir temp && \
     make && \
-    mkdir /usr/you-get-download && \
-    chmod o+w /usr/you-get-download && \
-    chown -R node:node /app && \
-    chmod o-r /app
+    mkdir /usr/you-get-download
 
-COPY --from=builder --chown=node:node /app/public ./public
-COPY --chown=node:node /script/sniffer.sh /app/
+COPY --from=builder /app/public ./public
+COPY /script/sniffer.sh /app/
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=node:node /app/.next/standalone ./
-COPY --from=builder --chown=node:node /app/.next/static ./.next/static
-
-USER node
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
 
 EXPOSE 3000
 
