@@ -287,8 +287,12 @@ export default function Home() {
                         </Button>,
                     ]}
                 >
-                    <TextArea rows={8} onChange={handleCookiesChange}
-                              placeholder="针对会员用户可以下载最高清晰度的视频，数据仅在本地，请放心使用～"/>
+                    <TextArea
+                        rows={8}
+                        onChange={handleCookiesChange}
+                        defaultValue={(formData as any).cookies || ''}
+                        placeholder="针对会员用户可以下载最高清晰度的视频，数据仅在本地，请放心使用～"
+                    />
                 </Modal>
                 <Modal
                     open={logVisible}

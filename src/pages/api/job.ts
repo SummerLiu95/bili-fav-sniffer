@@ -51,7 +51,6 @@ export default function handler(
                 title,
             }
             writeFileSync('/app/config.json', JSON.stringify(config, null, 2));
-            writeFileSync('/app/cookies.txt', '');
             if (!existsSync('/app/BV.txt')) {
                 writeFileSync('/app/BV.txt', '');
             }
