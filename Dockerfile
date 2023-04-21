@@ -62,7 +62,8 @@ RUN tar -zxvf DanmakuFactory-1.63.tar.gz && \
     cd DanmakuFactory-1.63 && \
     mkdir temp && \
     make && \
-    mkdir /usr/you-get-download
+    mkdir /usr/you-get-download && \
+    touch /app/cookies.txt
 
 COPY --from=builder /app/public ./public
 COPY /script/sniffer.sh /app/
