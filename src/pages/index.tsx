@@ -167,10 +167,14 @@ export default function Home() {
                 console.log(info.file, info.fileList);
             }
             if (info.file.status === 'done') {
-                message.success(`${info.file.name} 文件成功上传`);
-                setFormData((info.file.response as any).data);
+                message.success(`${info.file.name} 配置文件解析成功`);
+                const result = (info.file.response as any).data;
+                setFormData(result);
+                checkRSSDomain(result.rss_domain);
+                checkTele(result.telegram_bot_token, result.telegram_chat_id);
+                onClose();
             } else if (info.file.status === 'error') {
-                message.error(`${info.file.name} 文件上传失败`);
+                message.error(`${info.file.name} 配置文件解析失败`);
             }
         },
     };
@@ -189,9 +193,8 @@ export default function Home() {
         }
     }
 
-    const handleChatIDBlur = async (event: React.FocusEvent<HTMLInputElement>) => {
-        const telegram_bot_token = form.getFieldValue('telegram_bot_token');
-        if (!telegram_bot_token || !event.target.value) {
+    const checkTele = async (telegram_bot_token: string, telegram_chat_id: string) => {
+        if (!telegram_bot_token || !telegram_chat_id) {
             return;
         }
         setValidateChatIDStatus('validating');
@@ -201,7 +204,7 @@ export default function Home() {
                 body: JSON.stringify({
                     type: ConnectionType.Tele,
                     telegram_bot_token,
-                    telegram_chat_id: event.target.value,
+                    telegram_chat_id,
                 }),
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8'
@@ -218,17 +221,14 @@ export default function Home() {
         }
     };
 
-    const handleRSSDomainBlur = async (event: React.FocusEvent<HTMLInputElement>) => {
-        if (!event.target.value) {
-            return;
-        }
+    const checkRSSDomain = async (url: string) => {
         setValidateRSSStatus('validating');
         try {
             const resp = await fetch('/api/connection', {
                 method: 'POST',
                 body: JSON.stringify({
                     type: ConnectionType.RSS,
-                    url: event.target.value,
+                    url,
                 }),
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8'
@@ -330,7 +330,10 @@ export default function Home() {
                                 hasFeedback
                                 validateStatus={validateChatIDStatus as ""}
                             >
-                                <Input placeholder="请输入 TG chat id" onBlur={handleChatIDBlur}/>
+                                <Input
+                                    placeholder="请输入 TG chat id"
+                                    onBlur={e => checkTele(form.getFieldValue('telegram_bot_token'), e.target.value)}
+                                />
                             </Form.Item>
                         </Form.Item>
                         <Form.Item
@@ -364,7 +367,7 @@ export default function Home() {
                                     message: '请输入符合的地址，注意不要以 / 结尾'
                                 }
                             ]}>
-                            <Input onBlur={handleRSSDomainBlur}/>
+                            <Input onBlur={e => checkRSSDomain(e.target.value)}/>
                         </Form.Item>
                         <Form.Item
                             name="cron"
