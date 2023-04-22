@@ -21,18 +21,12 @@ export default function Home() {
     const [formData, setFormData] = useState<FormDataType>();
     const [nextInvocationTime, setInvocationTime] = useState('');
     const [cookiesVisible, setCookiesVisible] = useState(false); // 控制模态框的显示与隐藏
-    const [logVisible, setLogVisible] = useState(false); // 控制模态框的显示与隐藏
-    const [runningLog, setRunningLog] = useState(''); // 保存 TextArea 中的文本内容
     const [validateChatIDStatus, setValidateChatIDStatus] = useState('');
     const [validateRSSStatus, setValidateRSSStatus] = useState('');
     const [open, setOpen] = useState(false);
 
-    const showDrawer = () => {
-        setOpen(true);
-    };
-
-    const onClose = () => {
-        setOpen(false);
+    const handleDrawerVisible = (visible: boolean) => {
+        setOpen(visible);
     };
 
     useEffect(() => {
@@ -103,14 +97,11 @@ export default function Home() {
         }
     }
 
-    const showModal = () => {
-        setCookiesVisible(true);
+    const handleCookiesModalVisible = (visible: boolean) => {
+        setCookiesVisible(visible);
     };
 
-    const showLog = () => {
-        setLogVisible(true);
-    }
-    const handleOk = async () => {
+    const submitCookies = async () => {
         try {
             const response = await fetch('/api/config', {
                 method: 'POST',
@@ -128,12 +119,8 @@ export default function Home() {
             message.error(`${error}`);
             console.error(error);
         } finally {
-            setCookiesVisible(false);
+            handleCookiesModalVisible(false);
         }
-    };
-
-    const handleCancel = () => {
-        setCookiesVisible(false);
     };
 
     const handleCookiesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -174,7 +161,7 @@ export default function Home() {
                 });
                 checkRSSDomain(result.rss_domain);
                 checkTele(result.telegram_bot_token, result.telegram_chat_id);
-                onClose();
+                handleDrawerVisible(false);
             } else if (info.file.status === 'error') {
                 message.error(`${info.file.name} 配置文件解析失败`);
             }
@@ -260,13 +247,12 @@ export default function Home() {
                     <Button
                         className={styles.setting}
                         type="text"
-                        ghost
                         icon={<SettingOutlined style={{fontSize: '16px'}}/>}
-                        onClick={showDrawer}
+                        onClick={() => handleDrawerVisible(true)}
 
                     />
                 </Popover>
-                <Drawer title="配置管理" placement="right" onClose={onClose} open={open}>
+                <Drawer title="配置管理" placement="right" onClose={() => handleDrawerVisible(false)} open={open}>
                     <Upload {...props} >
                         <Button className={styles.reset}>导入配置</Button>
                     </Upload>
@@ -278,11 +264,12 @@ export default function Home() {
                     open={cookiesVisible}
                     mask={true}
                     closable={false}
+                    centered
                     footer={[
-                        <Button key="back" onClick={handleCancel}>
+                        <Button key="back" onClick={() => handleCookiesModalVisible(false)}>
                             取消
                         </Button>,
-                        <Button key="submit" type="primary" onClick={handleOk} disabled={!formData?.cookies}>
+                        <Button key="submit" type="primary" onClick={submitCookies} disabled={!formData?.cookies}>
                             确认
                         </Button>,
                     ]}
@@ -293,17 +280,6 @@ export default function Home() {
                         value={formData?.cookies || ''}
                         placeholder="针对会员用户可以下载最高清晰度的视频，数据仅在本地，请放心使用～"
                     />
-                </Modal>
-                <Modal
-                    open={logVisible}
-                    mask={true}
-                    closable={true}
-                    title="日志"
-                    centered
-                    width={1000}
-                    footer={null}
-                >
-                    <TextArea style={{backgroundColor: '#020202'}} rows={30} value={runningLog} readOnly/>
                 </Modal>
                 <div className={styles.container}>
                     <Form
@@ -383,7 +359,7 @@ export default function Home() {
                         <Form.Item label="Cookies">
                             <Input
                                 style={{cursor: 'pointer'}}
-                                onClick={showModal}
+                                onClick={() => handleCookiesModalVisible(true)}
                                 readOnly
                                 placeholder={`点击${formData?.cookies ? '查看已填写的' : '输入'} cookies 值`}
                             />
@@ -404,11 +380,6 @@ export default function Home() {
                                 手动执行
                             </Button>
                         </Form.Item>
-                        {/* <Form.Item {...tailLayout} className={styles.buttons}>
-                            <Button type="link" onClick={showLog}>
-                                查看日志
-                            </Button>
-                        </Form.Item> */}
                     </Form>
                 </div>
             </main>
