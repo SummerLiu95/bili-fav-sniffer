@@ -10,16 +10,22 @@ export default async function handler(
     res: NextApiResponse<Data>
 ) {
     if (req.method === 'GET') {
+        let cookies = '';
         if (existsSync('/app/config.json')) {
             const obj = await fs.readFile('/app/config.json', 'utf-8');
-            const cookies = await fs.readFile('/app/cookies.txt', 'utf-8');
+            if (existsSync('/app/cookies.txt')) {
+                cookies = await fs.readFile('/app/cookies.txt', 'utf-8');
+            }
             const config = JSON.parse(obj);
             const result = Object.assign({cookies}, config, {
                 fav_url: `https://space.bilibili.com/${config.uid}/favlist?fid=${config.fid}&ftype=create`
             });
             res.status(200).json({ msg: '成功读取配置文件', data: result })
         } else {
-            res.status(200).json({ msg: '配置文件还未创建', data: {} })
+            if (existsSync('/app/cookies.txt')) {
+                cookies = await fs.readFile('/app/cookies.txt', 'utf-8');
+            }
+            res.status(200).json({ msg: '配置文件还未创建', data: {cookies} })
         }
     } else if (req.method === 'POST') {
         try {

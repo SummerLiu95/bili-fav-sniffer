@@ -17,3 +17,13 @@ export enum ConnectionType {
     Tele,
     RSS
 }
+
+export interface FormDataType {
+    telegram_bot_token: string;
+    telegram_chat_id: string;
+    fav_url: string;
+    rss_domain: string;
+    cron: string;
+    cookies: string;
+    title: string;
+}
