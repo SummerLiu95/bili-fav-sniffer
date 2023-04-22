@@ -61,9 +61,7 @@ export default function Home() {
     }, []);
 
     useEffect(() => {
-        const {fid, uid} = formData as any;
         form.setFieldsValue({
-            fav_url: uid && fid ? `https://space.bilibili.com/${uid}/favlist?fid=${fid}&ftype=create` : '',
             ...formData
         });
     }, [formData, form]);

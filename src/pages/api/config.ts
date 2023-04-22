@@ -13,7 +13,10 @@ export default async function handler(
         if (existsSync('/app/config.json')) {
             const obj = await fs.readFile('/app/config.json', 'utf-8');
             const cookies = await fs.readFile('/app/cookies.txt', 'utf-8');
-            const result = Object.assign({cookies}, JSON.parse(obj));
+            const config = JSON.parse(obj);
+            const result = Object.assign({cookies}, config, {
+                fav_url: `https://space.bilibili.com/${config.uid}/favlist?fid=${config.fid}&ftype=create`
+            });
             res.status(200).json({ msg: '成功读取配置文件', data: result })
         } else {
             res.status(200).json({ msg: '配置文件还未创建', data: {} })
