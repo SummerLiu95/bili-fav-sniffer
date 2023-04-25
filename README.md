@@ -8,6 +8,9 @@
 **建议该服务运行在有科学冲浪环境的软路由、VPS 或 NAS 等一些能够不停机的“服务器”，因为 RSSHub 服务直连有较大概率失败（当然 RSSHub 服务也可以自己本地部署来解决这个问题）**。
 ![](https://picbed-1253377077.cos.ap-guangzhou.myqcloud.com/img/202303111755903.png)
 
+## 使用演示
+在 NAS 中为例，演示如何使用该项目
+
 ## 使用运行
 ```bash
 docker run \
@@ -18,20 +21,43 @@ docker run \
 ```
 然后打开配置页面地址填写必要信息即可开启嗅探服务～
 
+## 使用须知
+
+获取cookies需要用到一个Chrome插件：[EditThisCookie](https://chrome.google.com/webstore/detail/editthiscookie/fngmhnnpilhplaeedifhccceomclgfbg)，
+以 Netscape HTTP Cookie File 方式导出文本并复制到配置页面的 cookies 输入框。
+
+下载下面给的配置文件，在配置文件将对应字段填写完毕后在配置页面选择导入配置
+
+## 配置文件模板
+### 配置文件模板下载
+[config.json](https://github.com/BarryLiu1995/bili-fav-sniffer/blob/main/template/config.json)
+
+### 配置文件字段说明
+```json
+{
+  "telegram_bot_token": "Telegram 推送机器人 token，为选填",
+  "telegram_chat_id": "Telegram 推送聊天框 id，为选填",
+  "fav_url": "收藏夹 URL，为必须填字段",
+  "rss_domain": "RSSHub 服务地址，为必须填字段，可以选择使用默认值",
+  "cron": "cron 定时表达式，为必须填字段，可以选择使用默认值"
+}
+```
+
 ## 主要功能
 - 嗅探新收藏视频（第一次会将最近收藏的20条视频下载，后续运行只会下载新收藏视频）
 - 某次运行下载未成功视频会在下次运行中重新尝试直到成功下载为止
 - 可以随时控制任务的停止开启以及运行时间
-- 通知推送
+- 下载结果通知推送
 - 最高可以下载视频的最高分辨率视频（需要填入cookies）
 - 下载收藏的视频时可以下载封面和弹幕
-- 视频合集下载
+- 支持收藏的视频合集下载
+- 配置文件的导入导出，避免每次手写填入的麻烦
 
 
 ## DockerHub 镜像地址
 [fish95/bili-fav-sniffer](https://hub.docker.com/r/fish95/bili-fav-sniffer)
 
-## To-Do(更新中，待 to-do 事项完成后发布正式版本)
+## To-Do
 - [x] 配置文件
 - [x] 多个新收藏视频下载
 - [x] 修复视频下载是否成功得判断逻辑
@@ -60,9 +86,6 @@ docker run \
 - [ ] 推送消息方式的增加和选择
 - [ ] 增加历史日志查询页面
 
-## 使用须知
-
-获取cookies需要用到一个Chrome插件：[EditThisCookie](https://chrome.google.com/webstore/detail/editthiscookie/fngmhnnpilhplaeedifhccceomclgfbg)，以 Netscape HTTP Cookie File 方式导出文本并复制到配置页面的 cookies 输入框
 
 ## 本地构建运行
 ```bash
