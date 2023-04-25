@@ -1,0 +1,7 @@
+{
+  "telegram_bot_token": "",
+  "telegram_chat_id": "",
+  "fav_url": "",
+  "rss_domain": "https://rsshub.app",
+  "cron": "0 5 * * *"
+}
