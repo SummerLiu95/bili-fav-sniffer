@@ -11,6 +11,9 @@
 ## 使用演示
 在 NAS 中为例，演示如何使用该项目
 
+https://user-images.githubusercontent.com/20590350/234473292-3c86f22e-7c63-4d8c-959c-a310fc546257.mp4
+
+
 ## 使用运行
 ```bash
 docker run \
