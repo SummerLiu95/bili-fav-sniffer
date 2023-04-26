@@ -1,10 +1,10 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
-import {Button, Form, Input, message, Modal, Upload, Popover, Drawer} from 'antd';
+import {Button, Form, Input, message, Modal, Upload, Popover, Drawer, FloatButton} from 'antd';
 import React, {useEffect, useState} from 'react';
 import {ConnectionType, EasterEgg, FormDataType} from '@/const';
 import type {UploadProps} from 'antd';
-import {SettingOutlined} from '@ant-design/icons';
+import {QuestionCircleOutlined, SettingOutlined} from '@ant-design/icons';
 
 const {TextArea} = Input;
 
@@ -382,6 +382,13 @@ export default function Home() {
                         </Form.Item>
                     </Form>
                 </div>
+                <FloatButton
+                    href="/videos/demo.mp4"
+                    target="_blank"
+                    icon={<QuestionCircleOutlined />}
+                    type="default"
+                    style={{ right: 24 }}
+                />
             </main>
         </>
     )
