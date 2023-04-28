@@ -5,8 +5,7 @@
 # bili-fav-sniffer
 相信大家都会有一个困惑（特别是作为一名住在 B 站的程序员来说🤣）：收藏好的 B 站视频失效无法观看，觉得可太可惜了。此时这个工具就是为解决这种情况而诞生的。它会定期检测某个特定收藏夹是否有新收藏但未下载的视频，如果有即下载新收藏的视频。
 
-**建议该服务运行在有科学冲浪环境的软路由、VPS 或 NAS 等一些能够不停机的“服务器”，因为 RSSHub 服务直连有较大概率失败（当然 RSSHub 服务也可以自己本地部署来解决这个问题）**。
-![](https://picbed-1253377077.cos.ap-guangzhou.myqcloud.com/img/202303111755903.png)
+**建议该服务运行在有科学冲浪环境的软路由、VPS 或 NAS 等一些能够不停机的“服务器”，因为 RSSHub 服务直连有较大概率失败（当然 RSSHub 服务也可以自己本地部署来解决这个问题）**
 
 ## 使用演示
 在 NAS 中为例，演示如何使用该项目
@@ -33,7 +32,7 @@ docker run \
 
 ## 配置文件模板
 ### 配置文件模板下载
-[config.json](https://github.com/BarryLiu1995/bili-fav-sniffer/blob/main/template/config.json)
+<a href="https://github.com/BarryLiu1995/bili-fav-sniffer/blob/main/template/config.json" download="config.json">config.json</a>
 
 ### 配置文件字段说明
 ```json
