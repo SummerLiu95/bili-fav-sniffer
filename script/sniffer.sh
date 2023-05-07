@@ -91,9 +91,9 @@ for(( i=${#infoArray[@]} - 1;i >= 0;i--)) do
       wget "$photoLink" -O "$folderName/$videoTitle.png"
     fi
     if [ "$cookies" != "" ]; then
-        $you --debug --playlist -c "$cookies_location" -o "$folderName" "$link"
+        $you --force --debug --playlist -c "$cookies_location" -o "$folderName" "$link"
     else
-        $you --debug --playlist -o "$folderName" "$link"
+        $you --force --debug --playlist -o "$folderName" "$link"
     fi
     for file in "$folderName"/*; do
       if [ "${file##*.}" = "xml" ]; then
