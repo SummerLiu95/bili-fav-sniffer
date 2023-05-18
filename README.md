@@ -1,5 +1,5 @@
 <div align=center>
-
+<img src="https://github.com/BarryLiu1995/bili-fav-sniffer/assets/20590350/d4554851-ec3a-4b8c-af7e-a81f4e59aefe" width="300" height="300"/>
 </div>
 
 # bili-fav-sniffer
