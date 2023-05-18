@@ -14,6 +14,7 @@ https://user-images.githubusercontent.com/20590350/234473292-3c86f22e-7c63-4d8c-
 
 
 ## 使用运行
+dockerhub 镜像地址：[fish95/bili-fav-sniffer](https://hub.docker.com/r/fish95/bili-fav-sniffer)
 ```bash
 docker run \
   --name ${nameOfContainer} \
@@ -31,17 +32,14 @@ docker run \
 下载下面给的配置文件，在配置文件将对应字段填写完毕后在配置页面选择导入配置
 
 ## 配置文件模板
-### 配置文件模板下载
-<a href="https://github.com/BarryLiu1995/bili-fav-sniffer/blob/main/template/config.json" download="config.json">config.json</a>
-
-### 配置文件字段说明
+配置文件模板地址：[config.json](https://github.com/BarryLiu1995/bili-fav-sniffer/blob/main/template/config.json)，配置字段说明如下：
 ```json
 {
   "telegram_bot_token": "Telegram 推送机器人 token，为选填",
   "telegram_chat_id": "Telegram 推送聊天框 id，为选填",
-  "fav_url": "收藏夹 URL，为必须填字段",
-  "rss_domain": "RSSHub 服务地址，为必须填字段，可以选择使用默认值",
-  "cron": "cron 定时表达式，为必须填字段，可以选择使用默认值"
+  "fav_url": "* 收藏夹URL，为必填字段",
+  "rss_domain": "* RSSHub服务地址，为必填字段，可以选择使用默认值",
+  "cron": "* cron定时表达式，为必填字段，可以选择使用默认值"
 }
 ```
 
@@ -54,10 +52,6 @@ docker run \
 - 下载收藏的视频时可以下载封面和弹幕
 - 支持收藏的视频合集下载
 - 配置文件的导入导出，避免每次手写填入的麻烦
-
-
-## DockerHub 镜像地址
-[fish95/bili-fav-sniffer](https://hub.docker.com/r/fish95/bili-fav-sniffer)
 
 ## Roadmap
 - [ ] 考虑用户扫码登入bili账号下载会员清晰度视频
