@@ -1,5 +1,5 @@
 <div align=center>
-<img src="https://picbed-1253377077.cos.ap-guangzhou.myqcloud.com/img/202302121317373.png" width="300" height="300"/>
+
 </div>
 
 # bili-fav-sniffer
