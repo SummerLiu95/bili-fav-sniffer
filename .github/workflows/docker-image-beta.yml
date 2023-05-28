@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Docker Beta Image CI
 
 on:
   push:
