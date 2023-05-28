@@ -1,10 +1,10 @@
 name: Docker Image CI
 
 on:
-  create:
-    tags: ['beta-*']
-    
-permissions: 
+  push:
+    branches: [ "test" ]
+
+permissions:
   packages: write
 
 jobs:
@@ -34,4 +34,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            fish95/bili-fav-sniffer:${{ github.ref_slug == 'beta-*' && 'beta' || 'latest' }}
+            fish95/bili-fav-sniffer:beta
