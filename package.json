@@ -28,6 +28,7 @@
   "devDependencies": {
     "@types/body-parser": "^1.19.2",
     "@types/formidable": "^2.0.5",
-    "@types/node-schedule": "^2.1.0"
+    "@types/node-schedule": "^2.1.0",
+    "standard-version": "^9.5.0"
   }
 }
