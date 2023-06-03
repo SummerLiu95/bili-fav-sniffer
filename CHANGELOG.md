@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/BarryLiu1995/bili-fav-sniffer/compare/v0.10.0...v1.0.0) (2023-06-03)
+
+
+### 🚀 Chore
+
+* **changlog:** modify changlog template ([feb894c](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/feb894c06d2d28550185ee275a14d2549af20836))
+
+
+### 👷 Continuous Integration
+
+* **release:** auto create release note when git tag was created ([bf7b5b4](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/bf7b5b4c6f1c0cd268f7cb2c812c2f9c1818f1c3))
+
 ## [0.10.0](https://github.com/BarryLiu1995/bili-fav-sniffer/compare/v0.9.5...v0.10.0) (2023-06-03)
 
 
