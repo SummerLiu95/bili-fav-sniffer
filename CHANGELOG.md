@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/BarryLiu1995/bili-fav-sniffer/compare/v1.0.0...v1.1.0) (2023-06-03)
+
+
+### 👷 Continuous Integration
+
+* **release:** change release workflow ([7d12e3d](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/7d12e3d5f10b7316839ee561a4fbe8687814e23e))
+
 ## [1.0.0](https://github.com/BarryLiu1995/bili-fav-sniffer/compare/v0.10.0...v1.0.0) (2023-06-03)
 
 
