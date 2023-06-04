@@ -1,12 +1,17 @@
 {
   "name": "bili-fav-sniffer",
   "version": "1.1.1",
-  "private": true,
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BarryLiu1995/bili-fav-sniffer.git"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "release": "github-release-from-changelog --filename CHANGELOG.md --dryRun"
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
@@ -29,6 +34,7 @@
     "@types/body-parser": "^1.19.2",
     "@types/formidable": "^2.0.5",
     "@types/node-schedule": "^2.1.0",
+    "github-release-from-changelog": "^2.1.1",
     "standard-version": "^9.5.0"
   }
 }

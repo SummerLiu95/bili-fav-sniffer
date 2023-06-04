@@ -16,13 +16,12 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 18
 
       - name: Install dependencies
         run: npm install
 
       - name: Publish release
-      - run: npm i -g github-release-from-changelog
-      - run: github-release-from-changelog
         env:
           GITHUB_TOKEN: ${{secrets.RELEASE_TOKEN}}
+        run: npm run release
