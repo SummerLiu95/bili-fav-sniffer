@@ -35,6 +35,7 @@
     "@types/formidable": "^2.0.5",
     "@types/node-schedule": "^2.1.0",
     "github-release-from-changelog": "^2.1.1",
+    "sass": "^1.62.1",
     "standard-version": "^9.5.0"
   }
 }

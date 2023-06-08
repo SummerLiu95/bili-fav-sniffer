@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import styles from '@/styles/Home.module.css'
+import styles from '@/styles/home.module.scss'
 import {Button, Form, Input, message, Modal, Upload, Popover, Drawer, FloatButton} from 'antd';
 import React, {useEffect, useState} from 'react';
 import {ConnectionType, EasterEgg, FormDataType} from '@/const';
