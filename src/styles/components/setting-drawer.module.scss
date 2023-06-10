@@ -1,0 +1,19 @@
+.row {
+    margin: 20px 0;
+
+    .ant-col-24 {
+        justify-content: center;
+    }
+}
+
+.import {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.export {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
