@@ -247,8 +247,9 @@ export default function Home() {
                                     message: '请输入正确的收藏夹地址'
                                 }
                             ]}
-                            >
-                            <Input placeholder="例如 https://space.bilibili.com/31386575/favlist?fid=2006220975&ftype=create"/>
+                        >
+                            <Input
+                                placeholder="例如 https://space.bilibili.com/31386575/favlist?fid=2006220975&ftype=create"/>
                         </Form.Item>
                         <Form.Item
                             name="rss_domain"
@@ -272,7 +273,7 @@ export default function Home() {
                             label="Cron 定时"
                             rules={[{required: true}]}
                             tooltip={<span>查阅 <a target="_blank" style={{textDecoration: "underline"}}
-                                                href="https://crontab.guru/#0_10,19_*_*_*">Cron 表达式解析</a></span>}
+                                                   href="https://crontab.guru/#0_10,19_*_*_*">Cron 表达式解析</a></span>}
                         >
                             <Input/>
                         </Form.Item>
@@ -297,9 +298,9 @@ export default function Home() {
                 <FloatButton
                     href="/videos/demo.mp4"
                     target="_blank"
-                    icon={<QuestionCircleOutlined />}
+                    icon={<QuestionCircleOutlined/>}
                     type="default"
-                    style={{ right: 24 }}
+                    style={{right: 24}}
                 />
             </main>
         </>
