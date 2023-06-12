@@ -2,10 +2,12 @@ import type {NextApiRequest, NextApiResponse} from 'next'
 import {Data} from '@/const';
 import bodyParser from 'body-parser';
 import fetch from 'node-fetch';
-import transformNetscapeCookies from '@/utils/transform-netscape-cookies';
+import {getNetscapeCookieText} from '@/utils/transform-netscape-cookies';
 import {promises as fs} from 'node:fs';
 
 const jsonParser = bodyParser.json();
+
+let setCookieHeader = '';
 
 export default async function handler(
     req: NextApiRequest,
@@ -25,25 +27,15 @@ export default async function handler(
             jsonParser(req, res, async function () {
                 const url = `https://passport.bilibili.com/x/passport-login/web/qrcode/poll?qrcode_key=${req.body['qrcode_key']}`
                 const response = await fetch(url);
+                const headers = response.headers;
+                setCookieHeader = headers.get('set-cookie') as string;
                 const data = await response.json() as {
                     code: number;
                     data: { code: number; refresh_token: string }
                 };
                 if (!data.code) {
                     if (data.data.code === 0) {
-                        const headers = response.headers;
-                        const setCookieHeader = headers.get('set-cookie') as string;
-                        const regex = /Expires=([^;]+GMT[;,]?)/g;
-                        const cookies = setCookieHeader.replace(regex, (match, expiresValue) => {
-                            const expiresTimestamp = new Date(expiresValue).getTime() / 1000;
-                            let symbol = ''
-                            if(expiresValue.endsWith('GMT;') || expiresValue.endsWith('GMT,')) {
-                                symbol = expiresValue.slice(-1);
-                            }
-                            return `Expires=${expiresTimestamp}${symbol}`;
-                        });
-                        const cookiesArray = cookies.split(',').map(str => str.trim());
-                        await fs.writeFile('/app/cookies.txt', transformNetscapeCookies(cookiesArray));
+                        await fs.writeFile('/app/cookies.txt', getNetscapeCookieText(setCookieHeader));
                     }
                     res.status(200).json({msg: '成功请求', data: data.data});
                 }
@@ -54,3 +46,5 @@ export default async function handler(
         }
     }
 }
+
+export {setCookieHeader}

@@ -27,3 +27,16 @@ export interface FormDataType {
     cookies: string;
     title: string;
 }
+
+export const LocalStorageKey = 'bili';
+
+export type UserInfo = {
+    isLogin: boolean;
+    face: string;
+    uname: string;
+    level_info: {
+        current_level: number;
+    }
+    mid: number;
+    money: number;
+}
