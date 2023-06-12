@@ -25,14 +25,8 @@ docker run \
 然后打开配置页面地址填写必要信息即可开启嗅探服务～
 
 ## 使用须知
-
-获取cookies需要用到一个Chrome插件：[EditThisCookie](https://chrome.google.com/webstore/detail/editthiscookie/fngmhnnpilhplaeedifhccceomclgfbg)，
-以 Netscape HTTP Cookie File 方式导出文本并复制到配置页面的 cookies 输入框。
-
-下载下面给的配置文件，在配置文件将对应字段填写完毕后在配置页面选择导入配置
-
-## 配置文件模板
-配置文件模板地址：[config.json](https://github.com/BarryLiu1995/bili-fav-sniffer/blob/main/template/config.json)，配置字段说明如下：
+下载配置文件模板 [config.json](https://github.com/BarryLiu1995/bili-fav-sniffer/blob/main/template/config.json)，在配置文件将对应字段填写完毕后在配置页面选择导入配置
+配置字段说明如下：
 ```json
 {
   "telegram_bot_token": "Telegram 推送机器人 token，为选填",
@@ -54,7 +48,7 @@ docker run \
 - 配置文件的导入导出，避免每次手写填入的麻烦
 
 ## Roadmap
-- [ ] 考虑用户扫码登入bili账号下载会员清晰度视频
+- [x] 考虑用户扫码登入bili账号下载会员清晰度视频
 - [ ] 考虑接入bili官方收藏夹接口替换 RssHub
 - [ ] 多收藏夹嗅探以及下载管理
 - [ ] 多进程并行下载多个视频
@@ -90,18 +84,6 @@ docker run -it --rm -p 3000:3000 -v ${specifiedVideoDownloadDir}:/usr/you-get-do
 6. 如您对本工具的使用存在任何疑问，欢迎提 issue，本工具作者将在帮助解决问题的同时，并不承担因使用本工具而导致的任何形式的责任。
 
 7. 您在下载、使用本工具以及使用本项目的过程中，即视为您已经仔细阅读并完全同意本声明的所有条款，如有异议，请立即停止使用本工具。
-
-## 参考资料
-[自动下载B站收藏视频](https://blog.left.pink/archives/3073)\
-[社交媒体-bilibili up主非默认收藏夹｜RSSHub](https://docs.rsshub.app/social-media.html#bilibili-up-zhu-fei-mo-ren-shou-cang-jia)\
-[Telegram 创建 bot 获取 token 和 chatID 以及发送消息简明教程](https://hellodk.cn/post/743)
-
-## 感谢
-[Left024/BiliFavoritesDownloader](https://github.com/Left024/BiliFavoritesDownloader)\
-[you-get](https://github.com/soimort/you-get)\
-[FFmpeg](https://github.com/FFmpeg/FFmpeg)\
-[RSSHub](https://github.com/DIYgod/RSSHub)\
-[hihkm/DanmakuFactory](https://github.com/hihkm/DanmakuFactory)
 
 ## P.S.
 本项目中一些代码由 ChatGPT 输出，感谢 ChatGPT 哈哈哈哈。我只是个代码黏合怪哈哈哈哈哈～
