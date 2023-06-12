@@ -3,7 +3,8 @@ name: Release from Changelog
 on:
   create:
     tags: [ '*' ]
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   release:

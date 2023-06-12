@@ -2,7 +2,8 @@ name: Docker Beta Image CI
 
 on:
   push:
-    branches: [ "test" ]
+    branches:
+      - test
 
 permissions:
   packages: write

@@ -3,7 +3,8 @@ name: Docker Official Image CI
 on:
   create:
     tags: ['*']
-    branches: [ "main" ]
+    branches:
+      - main
 
 permissions:
   packages: write
