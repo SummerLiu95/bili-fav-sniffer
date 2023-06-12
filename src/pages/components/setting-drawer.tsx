@@ -18,6 +18,7 @@ import {UploadChangeParam} from 'antd/es/upload';
 import {LocalStorageKey, UserInfo} from '@/const';
 
 const { Title } = Typography;
+let timer: any;
 
 interface SettingProps {
     open: boolean;
@@ -53,6 +54,32 @@ export default function SettingDrawer({open, drawerOnClose, nextInvocationTime, 
         }
     }
 
+    async function pollLogin(qrcode_key: string) {
+        const loginInfoResponse = await fetch('/api/login', {
+            method: 'POST',
+            body: JSON.stringify({
+                qrcode_key
+            }),
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            }
+        });
+        const loginInfoData = await loginInfoResponse.json() as {data: { code: number; refresh_token: string }};
+        if (loginInfoData.data.code === 0) {
+            message.success('登录成功！');
+            const userInfoResponse = await fetch('/api/user');
+            const userInfoData = await userInfoResponse.json();
+            setUserInfo(userInfoData.data);
+            localStorage.setItem(LocalStorageKey, JSON.stringify(userInfoData.data));
+        } else if (loginInfoData.data.code === 86038) {
+            setQrcodeStatus('expired');
+        } else {
+            timer = setTimeout(async () => {
+                await pollLogin(qrcode_key);
+            }, 5000)
+        }
+    }
+
     const openChange = async function (open: boolean) {
         try {
             if (!open || userInfo?.isLogin) {
@@ -63,28 +90,8 @@ export default function SettingDrawer({open, drawerOnClose, nextInvocationTime, 
             const data = await response.json() as  { data: {url: string; qrcode_key: string} };
             setQrcode(data.data.url);
             setQrcodeStatus('active');
-            const timer = setInterval(async () => {
-                const loginInfoResponse = await fetch('/api/login', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        qrcode_key: data.data.qrcode_key
-                    }),
-                    headers: {
-                        'Content-Type': 'application/json;charset=utf-8'
-                    }
-                });
-                const loginInfoData = await loginInfoResponse.json() as {data: { code: number; refresh_token: string }};
-                if (loginInfoData.data.code === 0) {
-                    clearInterval(timer);
-                    message.success('登录成功！');
-                    const userInfoResponse = await fetch('/api/user');
-                    const userInfoData = await userInfoResponse.json();
-                    setUserInfo(userInfoData.data);
-                    localStorage.setItem(LocalStorageKey, JSON.stringify(userInfoData.data));
-                } else if (loginInfoData.data.code === 86038) {
-                    setQrcodeStatus('expired');
-                    clearInterval(timer);
-                }
+            timer = setTimeout(async () => {
+                await pollLogin(data.data.qrcode_key);
             }, 5000)
         } catch (e) {
             message.error(`${e}`);
