@@ -2,6 +2,47 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/BarryLiu1995/bili-fav-sniffer/compare/v1.1.3...v1.2.0) (2023-06-14)
+
+
+### ♻️ Code Refactoring
+
+* **style:** add support for sass ([8e02306](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/8e02306b4211154c5e6843ffccaaaae2806ef2fd))
+
+
+### 💄 Styles
+
+* adjust the indentation ([769a4ec](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/769a4ec3ca6237060811cd608c62ac19af58d562))
+
+
+### ✨ Features
+
+* **cookies:** add support for scanning qrcode to get cookies ([dfa9227](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/dfa9227c0d5f9c132576c773bb78454c905d53ba))
+* **cookies:** improve the user scanning code login function ([192f294](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/192f2943034cb8d5cba442e5f61ef7179b21da9d))
+
+
+### 👷 Continuous Integration
+
+* **action:** modify to trigger action only the corresponding operation of a specific branch ([4b0b84f](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/4b0b84f72871779336f22325d4f13c47cb75b9b9))
+
+
+### 🐛 Bug Fixes
+
+* **cookies:** use setTimeout to poll access login status instead of setInterval ([da2c44f](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/da2c44fa13602e3af2d20efc9399287c1682823f))
+
+
+### ✏️ Documentation
+
+* add license ([1828d6c](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/1828d6c59e645cf6357a2ae3c2aff63bc4afd800))
+* update README.md ([f8e2dfc](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/f8e2dfcbaf59d6c5e6fb350dd0200d172ddca2c6))
+
+
+### 🚀 Chore
+
+* add editor debug configuration file ([5526e28](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/5526e28b87316432efc1f3a4255f5b0babf54f8f))
+* update favicon.ico ([fcb6498](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/fcb6498dc7bf415aa8666ecef6e6b39526c0b228))
+* update the value of the package.json license field ([a129dd3](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/a129dd3bb2dd51800bb37576a88f88e2d4c4a92a))
+
 ### [1.1.3](https://github.com/BarryLiu1995/bili-fav-sniffer/compare/v1.1.2...v1.1.3) (2023-06-04)
 
 ### [1.1.2](https://github.com/BarryLiu1995/bili-fav-sniffer/compare/v1.1.1...v1.1.2) (2023-06-04)
