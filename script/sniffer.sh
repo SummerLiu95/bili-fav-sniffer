@@ -112,6 +112,11 @@ for(( i=${#infoArray[@]} - 1;i >= 0;i--)) do
     downloadResult=""
     if [ $isDownloadedVideo = 1 ]; then
       echo "$bv" >>"${bv_location}"
+      echo "<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<movie>
+  <title>$videoTitle</title>
+  <id>$bv</id>
+</movie>" > "$folderName/video.nfo"
       downloadResult="下载成功"
     else
       downloadResult="下载出现异常"
