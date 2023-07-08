@@ -1,9 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Data } from '@/const';
 import { existsSync, promises as fs } from 'node:fs';
-import bodyParser from 'body-parser';
-
-const jsonParser = bodyParser.json();
 
 export default async function handler(
     req: NextApiRequest,
@@ -26,16 +23,6 @@ export default async function handler(
                 cookies = await fs.readFile('/app/cookies.txt', 'utf-8');
             }
             res.status(200).json({ msg: '配置文件还未创建', data: {cookies} })
-        }
-    } else if (req.method === 'POST') {
-        try {
-            jsonParser(req, res, async function () {
-                await fs.writeFile('/app/cookies.txt', req.body['cookies']);
-                res.status(200).json({ msg: '成功写入 cookies.txt' })
-            });
-        } catch (e) {
-            res.statusMessage = '写入 cookies.txt 发生错误';
-            res.status(500).end();
         }
     }
 }
