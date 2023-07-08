@@ -2,7 +2,6 @@
 source /etc/profile #添加这句
 export PATH=/opt/homebrew/bin/:$PATH
 
-you=you-get
 dirLocation=$(cd `dirname $0`; pwd)
 #配置参数
 telegram_bot_token=$(jq -c -r .telegram_bot_token "$dirLocation"/config.json)
@@ -36,14 +35,28 @@ echo "favorites title: $favTitle"
 
 #Cookies可用性检查
 if [ "$cookies" != "" ]; then
-    stat=$($you -i -l -c "$cookies_location" https://www.bilibili.com/video/BV1fK4y1t7hj)
-    subStat=${stat#*quality:}
-    data=${subStat%%#*}
-    quality=${data%%size*}
-    if ! [[ $quality =~ "4K" ]] && [ "$telegram_bot_token" != "" ]; then
-        curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id=$telegram_chat_id -d parse_mode=html -d text="$favTitle: Cookies 文件失效，请更新后重试"
-        exit
-    fi
+  # Open the cookie file
+  cookie_lines=$(cat "$cookies_location")
+
+  # Find the line that contains the SESSDATA attribute
+  sessdata_line=$(echo "$cookie_lines" | grep -E "SESSDATA\t")
+
+  # Get the attribute value
+  sessdata_value=$(echo "$sessdata_line" | cut -f 6 -d ' ')
+
+  # 提取最后一部分字符串
+  sessdata_value=$(echo "$sessdata_value" | awk -F'\t' '{print $NF}')
+
+  stat=$(bilix info https://www.bilibili.com/video/BV1fK4y1t7hj --cookie "$sessdata_value")
+
+  # 判断是否存在符合条件的行
+  if echo "$stat" | grep -q "4K" && echo "$stat" | grep -A 1 "4K" | grep -q "codec"; then
+    echo "cookies 在有效期内"
+  else
+    echo "cookies 已失效"
+    curl -s -X POST "https://api.telegram.org/bot$telegram_bot_token/sendMessage" -d chat_id=$telegram_chat_id -d parse_mode=html -d text="$favTitle: Cookies 失效，请重新登陆"
+    exit
+  fi
 fi
 
 #获取视频列表信息
@@ -75,33 +88,20 @@ for(( i=${#infoArray[@]} - 1;i >= 0;i--)) do
     tempVideoTitle=${titleSuffix%%\]\]>*}
     videoTitle=${tempVideoTitle//\//|}
     echo "video title: $videoTitle"
+    #跳过已失效视频
+    if [ "$videoTitle" = '已失效视频'  ]; then
+        continue;
+    fi
     #此处为视频存储位置，自行修改
     folderName="$videoLocation$videoTitle"
-    #获得封面图下载链接和文件名称
-    subContent=${item#*<img src=\"}
-    photoLink=${subContent%%\"*}
-    pName=${photoLink#*archive/}
-    echo "poster link: $photoLink"
-    #下载封面图（图片存储位置应和视频一致）
-    pNameCompareRes=$(echo "$pName" | grep "jpg")
     mkdir "$folderName"
-    if [ "$pNameCompareRes" != "" ]; then
-      wget "$photoLink" -O "$folderName/$videoTitle.jpg"
-    else
-      wget "$photoLink" -O "$folderName/$videoTitle.png"
-    fi
+    #区分是否带 cookie 下载
     if [ "$cookies" != "" ]; then
-        $you --skip-existing-file-size-check --force --debug --playlist -c "$cookies_location" -o "$folderName" "$link"
+        bilix s "$link" --subtitle --dm --image -nh --debug -d "$folderName" -vc 1 -sl 2MB -sr 2 -pc 2  --cookie "$sessdata_value"
     else
-        $you --skip-existing-file-size-check --force --debug --playlist -o "$folderName" "$link"
+        bilix s "$link" --subtitle --dm --image -nh --debug -d "$folderName" -vc 1 -sl 2MB -sr 2 -pc 2
     fi
-    for file in "$folderName"/*; do
-      if [ "${file##*.}" = "xml" ]; then
-        "$dirLocation"/DanmakuFactory-1.63/DanmakuFactory -o "${file%%.cmt.xml*}".ass -i "$file" -D 0 --ignore-warnings
-        #删除源文件
-        rm "$file"
-      fi
-    done
+    #判断对应文件夹是否有视频文件来判断下载是否成功
     isDownloadedVideo=0
     for file in "$folderName"/*; do
       if [ "${file##*.}" = "mp4" ] || [ "${file##*.}" = "flv" ] || [ "${file##*.}" = "mkv" ]; then

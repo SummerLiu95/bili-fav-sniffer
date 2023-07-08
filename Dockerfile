@@ -43,7 +43,7 @@ RUN apk update && \
     echo "Shanghai/Asia" > /etc/timezone && \
     rm -rf /var/cache/apk/* && \
     /bin/bash && \
-    python3 -m pip install you-get
+    python3 -m pip install bilix
 
 
 ENV NODE_ENV production
@@ -56,13 +56,7 @@ ENV TIME_ZONE Asia/Shanghai
 ENV LANG=zh_CN.UTF-8
 ENV LANGUAGE=zh_CN:zh
 
-COPY /libs/DanmakuFactory-1.63.tar.gz ./
-
-RUN tar -zxvf DanmakuFactory-1.63.tar.gz && \
-    cd DanmakuFactory-1.63 && \
-    mkdir temp && \
-    make && \
-    mkdir /usr/you-get-download && \
+RUN mkdir /usr/you-get-download && \
     touch /app/cookies.txt
 
 COPY --from=builder /app/public ./public
