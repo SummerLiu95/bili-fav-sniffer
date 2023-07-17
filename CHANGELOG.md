@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/BarryLiu1995/bili-fav-sniffer/compare/v1.2.0...v1.3.0) (2023-07-17)
+
+
+### ✨ Features
+
+* add .nfo file when video download successfully ([f9d0ba7](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/f9d0ba7e1d12430842202d65c7108349ea524b39))
+
+
+### ♻️ Code Refactoring
+
+* delete useless code snippet ([1f1f86e](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/1f1f86e9f8710f483aae27b08ab78862fb85694e))
+* replace with a new downloader ([284ee5b](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/284ee5b0c814caf18233ef9fd5e6fc60551b5b37))
+
+
+### ✏️ Documentation
+
+* update README ([d323d76](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/d323d760003a9ade530c3968e7944259bf95a363))
+* update README ([6124e15](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/6124e151a6c26f0b6f3ae7b4342978674d84ba17))
+
+
+### 👷 Continuous Integration
+
+* **action:** build corresponding image when operating git tag ([861b72f](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/861b72f770adcabae02d4309f97a1794ca04acc5))
+
 ## [1.2.0](https://github.com/BarryLiu1995/bili-fav-sniffer/compare/v1.1.3...v1.2.0) (2023-06-14)
 
 
