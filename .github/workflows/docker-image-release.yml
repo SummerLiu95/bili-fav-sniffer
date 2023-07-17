@@ -37,3 +37,4 @@ jobs:
           push: true
           tags: |
             fish95/bili-fav-sniffer:latest
+            fish95/bili-fav-sniffer:${{  github.ref_name }}
