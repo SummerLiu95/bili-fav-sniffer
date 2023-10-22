@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.1](https://github.com/BarryLiu1995/bili-fav-sniffer/compare/v1.3.0...v1.3.1) (2023-10-22)
+
+
+### 🐛 Bug Fixes
+
+* update expired bilibili api ([62b4cbe](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/62b4cbe5b88f4d2a304dcf28bc98a7c4dc843621))
+
 ## [1.3.0](https://github.com/BarryLiu1995/bili-fav-sniffer/compare/v1.2.0...v1.3.0) (2023-07-17)
 
 
