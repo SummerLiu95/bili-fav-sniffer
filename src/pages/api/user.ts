@@ -8,7 +8,7 @@ export default async function handler(
     res: NextApiResponse<Data>
 ) {
     if (req.method === 'GET') {
-        const response = await fetch('https://api.bilibili.com/nav', {
+        const response = await fetch('https://api.bilibili.com/x/web-interface/nav', {
             headers: {
                 'Cookie': setCookieHeader // 设置 Cookie 值
             }
