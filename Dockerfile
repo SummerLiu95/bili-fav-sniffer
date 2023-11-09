@@ -57,7 +57,7 @@ ENV LANG=zh_CN.UTF-8
 ENV LANGUAGE=zh_CN:zh
 
 RUN mkdir /usr/you-get-download && \
-    touch /app/cookies.txt
+    touch /app/cookies.txt /app/BV.txt
 
 COPY --from=builder /app/public ./public
 COPY /script/sniffer.sh /app/

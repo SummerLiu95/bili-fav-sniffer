@@ -1,11 +1,12 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type {NextApiRequest, NextApiResponse} from 'next'
 import {spawn} from 'node:child_process';
-import {existsSync, writeFileSync} from 'node:fs'
+import { writeFileSync } from 'node:fs'
 import {Job} from 'node-schedule';
-import {Data} from '@/const';
+import { Data } from '@/const';
 import bodyParser from 'body-parser';
 import fetch from 'node-fetch';
+import updateNFO from './service/updateNFO'
 
 const jsonParser = bodyParser.json();
 
@@ -31,7 +32,7 @@ export default function handler(
         jsonParser(req, res, async function () {
             const url = new URL(req.body['fav_url']);
             const searchParams = url.searchParams;
-            let title = '';
+            let title: string;
             const fid = searchParams.get('fid');
             const uid = url.pathname.split('/')[1];
             const response = await fetch(`https://api.bilibili.com/x/v3/fav/folder/info?media_id=${fid}`);
@@ -51,9 +52,7 @@ export default function handler(
                 title,
             }
             writeFileSync('/app/config.json', JSON.stringify(config, null, 2));
-            if (!existsSync('/app/BV.txt')) {
-                writeFileSync('/app/BV.txt', '');
-            }
+            updateNFO();
             if (job.nextInvocation()) {
                 if (job.reschedule(config.cron)) {
                     res.status(200).json({

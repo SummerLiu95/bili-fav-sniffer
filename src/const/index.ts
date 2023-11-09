@@ -40,3 +40,7 @@ export type UserInfo = {
     mid: number;
     money: number;
 }
+
+export const BV_Record_Path = '/app/BV.txt';
+
+export const Video_Downloaded_Path = '/usr/you-get-download/'
