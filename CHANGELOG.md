@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/BarryLiu1995/bili-fav-sniffer/compare/v1.3.1...v1.4.0) (2023-11-10)
+
+
+### ✨ Features
+
+* update BV.txt before starting the cron job ([2d98018](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/2d980184712d788ede3d909dc842dd46f1c67475))
+
+
+### 🚀 Chore
+
+* update browserslist db ([f56713d](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/f56713d4a20441e07cc7edab342c5585fa5764ea))
+
+
+### 👷 Continuous Integration
+
+* **action:** update github action config ([60b1319](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/60b1319a797a40b712974a41aa3971d81fc09045))
+
 ### [1.3.1](https://github.com/BarryLiu1995/bili-fav-sniffer/compare/v1.3.0...v1.3.1) (2023-10-22)
 
 
