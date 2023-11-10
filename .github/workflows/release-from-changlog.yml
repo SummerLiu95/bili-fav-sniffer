@@ -1,8 +1,9 @@
 name: Release from Changelog
 
 on:
-  create:
-    tags: [ '*' ]
+  push:
+    tags:
+      - '*'
     branches:
       - main
 

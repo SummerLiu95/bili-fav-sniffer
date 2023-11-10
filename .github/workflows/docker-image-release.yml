@@ -1,8 +1,9 @@
 name: Docker Official Image CI
 
 on:
-  create:
-    tags: ['*']
+  push:
+    tags:
+      - '*'
     branches:
       - main
 
