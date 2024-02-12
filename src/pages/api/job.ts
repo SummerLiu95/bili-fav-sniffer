@@ -20,7 +20,7 @@ let job = new Job('sniffer shell', function () {
     child.stderr.pipe(process.stderr);
 
     child.on('close', (code) => {
-        console.info(`script ${code === 0 ? 'successfully' : 'failed'} executed and exited`);
+        console.info(`Download script ${code === 0 ? 'successfully' : 'failed'} executed and exited`);
     });
 });
 

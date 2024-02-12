@@ -43,7 +43,7 @@ RUN apk update && \
     echo "Shanghai/Asia" > /etc/timezone && \
     rm -rf /var/cache/apk/* && \
     /bin/bash && \
-    python3 -m pip install bilix
+    python3 -m pip install bilix --break-system-packages
 
 
 ENV NODE_ENV production
@@ -61,6 +61,7 @@ RUN mkdir /usr/you-get-download && \
 
 COPY --from=builder /app/public ./public
 COPY /script/sniffer.sh /app/
+COPY /script/* /app/
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
@@ -71,5 +72,5 @@ EXPOSE 3000
 
 ENV PORT 3000
 
-CMD ["node", "server.js"]
+CMD ["node", "application.js"]
 
