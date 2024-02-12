@@ -10,7 +10,7 @@
 ## 使用演示
 在 NAS 中为例，演示如何使用该项目
 
-https://user-images.githubusercontent.com/20590350/234473292-3c86f22e-7c63-4d8c-959c-a310fc546257.mp4
+https://github.com/SummerLiu95/bili-fav-sniffer/assets/20590350/522cb8b5-13a3-425d-89d2-41e3b7e74b47
 
 
 ## 使用运行
@@ -46,19 +46,9 @@ docker run \
 - 下载收藏的视频时可以下载封面和弹幕、字幕
 - 支持收藏的视频合集下载
 - 配置文件的导入导出，避免每次手写填入的麻烦
+- 容器重启自动运行已运行的嗅探服务
 
 ## Roadmap
-### v1.2.0
-
-- [x]  扫码登录功能
-- [x]  展示用户信息
-- [x]  用户信息过期检查
-
-### v1.3.0
-
-- [x] 使用 Bilix 替换 you-get
-- [x] 生成 .nfo 文件
-
 ### v2.0.0
 
 - [ ] 替换 rsshub
