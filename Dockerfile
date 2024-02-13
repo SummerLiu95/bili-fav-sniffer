@@ -60,7 +60,6 @@ RUN mkdir /usr/you-get-download && \
     touch /app/cookies.txt /app/BV.txt
 
 COPY --from=builder /app/public ./public
-COPY /script/sniffer.sh /app/
 COPY /script/* /app/
 
 # Automatically leverage output traces to reduce image size
