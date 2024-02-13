@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/BarryLiu1995/bili-fav-sniffer/compare/v1.4.0...v1.5.0) (2024-02-13)
+
+
+### ✨ Features
+
+* auto triggers the sniffing task when restarting the container ([3dce2ae](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/3dce2ae195318140a15ed71ada95b23cad900aa0))
+* change the page title to the favorite name ([8bb84e7](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/8bb84e7cbb4fb58cdf2aa12b90ca3f26d62cad25))
+
+
+### ✏️ Documentation
+
+* update demo videos and readme ([ca726bb](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/ca726bb43a65354d7e3fc269cfe7d79ea7c34d84))
+* update readme ([491be20](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/491be2025a653aef4cbb5456c5271c32f398853f))
+
+
+### 🚀 Chore
+
+* update dockerfile ([83fcb0b](https://github.com/BarryLiu1995/bili-fav-sniffer/commit/83fcb0b0559c98bb229c4b61646e280ac89c7c00))
+
 ## [1.4.0](https://github.com/BarryLiu1995/bili-fav-sniffer/compare/v1.3.1...v1.4.0) (2023-11-10)
 
 
