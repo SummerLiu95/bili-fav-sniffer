@@ -8,8 +8,6 @@
 **建议该服务运行在有科学冲浪环境的软路由、VPS 或 NAS 等一些能够不停机的“服务器”，因为 RSSHub 服务直连有较大概率失败（当然 RSSHub 服务也可以自己本地部署来解决这个问题）**
 
 ## 使用演示
-在 NAS 中为例，演示如何使用该项目
-
 https://github.com/SummerLiu95/bili-fav-sniffer/assets/20590350/522cb8b5-13a3-425d-89d2-41e3b7e74b47
 
 
